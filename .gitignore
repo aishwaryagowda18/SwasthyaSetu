@@ -44,6 +44,10 @@ dist/
 build/
 .vite/
 
+test-results/
+playwright-report/
+*.tsbuildinfo
+
 # ===== Logs =====
 *.log
 logs/

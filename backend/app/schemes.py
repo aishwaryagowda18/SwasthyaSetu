@@ -58,6 +58,31 @@ def is_publishable(record: dict, approved: dict[str, str], today: date) -> bool:
     return True
 
 
+def _bare(url: str) -> str:
+    """'https://www.example.gov.in/apply/' -> 'example.gov.in/apply' (host and path must both match)."""
+    parts = urlparse(url)
+    host = (parts.hostname or "").lower()
+    host = host[4:] if host.startswith("www.") else host
+    return (host + parts.path).rstrip("/").lower()
+
+
+def official_apply_link(record: dict, approved: dict[str, str]) -> str | None:
+    """The scheme's application URL, only if it is verified. Never generated or guessed.
+
+    Verified means: an https URL on an approved official domain, citing one of the record's
+    sources, and the URL (host and path) appears in a quote taken from that same source.
+    """
+    link = record.get("apply_link") or {}
+    url, source_id = link.get("url", ""), link.get("source_id")
+    if not url.startswith("https://") or source_id not in {s["id"] for s in record.get("sources", [])}:
+        return None
+    hostname = urlparse(url).hostname or ""
+    if approved.get(hostname) != "approved":
+        return None
+    quotes = " ".join(e.get("quote", "") for e in record.get("evidence", []) if e.get("source_id") == source_id).lower()
+    return url if _bare(url) and _bare(url) in quotes else None
+
+
 def published_records(today: date | None = None) -> list[dict]:
     records, approved = load_all()
     today = today or date.today()

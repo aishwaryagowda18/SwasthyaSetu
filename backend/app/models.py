@@ -181,6 +181,7 @@ class SchemeSummary(BaseModel):
     state: str | None
     issuing_body: str
     last_checked: str  # oldest source check date
+    apply_link: str | None = None  # verified official application URL, or None if not available
 
 
 class SchemeDetail(SchemeSummary):

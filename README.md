@@ -28,12 +28,15 @@ schemes, understand benefits, check eligibility and prepare application document
 | Folder / file | Purpose |
 |---|---|
 | `docs/` | Architecture and design decisions |
-| `backend/` | Python FastAPI backend *(added in a later task)* |
-| `data/` | Cleaned, official, non-personal scheme data *(added in a later task)* |
-| `frontend/` | Web app *(added later; the existing live site is the design reference)* |
+| `backend/` | Python FastAPI backend: eligibility engine, scheme API, bulk source verification |
+| `data/` | Official, non-personal scheme records (drafts and reviewed) and the approved source list |
+| `frontend/` | React web app (Whitepace-inspired design) |
+| `tools/` | One-time data tools |
 | `.env.example` | Names of required settings. Copy to `.env` and fill in locally. |
 
 ## Status
 
-Phase 0 – project setup. Backend skeleton with a `/health` endpoint (see [backend/README.md](backend/README.md)).
+MVP: FastAPI backend (eligibility engine, published schemes, bulk source verification) and a
+React frontend (discovery, questionnaire, results, scheme details).
+See [backend/README.md](backend/README.md) and [frontend/README.md](frontend/README.md).
 See [docs/architecture.md](docs/architecture.md) for the agreed plan.

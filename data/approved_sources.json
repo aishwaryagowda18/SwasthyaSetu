@@ -56,6 +56,14 @@
       "proposed_at": "2026-11-21",
       "approved_by": null,
       "approved_at": null
+    },
+    {
+      "domain": "beneficiary.nha.gov.in",
+      "issuing_body": "National Health Authority (Ayushman Bharat beneficiary portal)",
+      "status": "approved",
+      "proposed_at": "2026-11-21",
+      "approved_by": "Aishwarya A",
+      "approved_at": "2026-11-21"
     }
   ]
 }

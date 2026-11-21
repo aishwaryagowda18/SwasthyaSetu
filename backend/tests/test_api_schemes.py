@@ -48,7 +48,8 @@ def test_nikshay_detail_has_sources_current_and_historical_amounts():
     for section in ("eligibility", "benefits", "historical_benefits", "required_documents", "how_to_apply"):
         for item in body[section]:
             assert item["source_id"] in source_ids and (item["page"] or item["section"])
-    assert any("Effective date" in n for n in body["notices"])  # uncertain detail is disclosed
+    assert any("not yet confirmed" in n for n in body["notices"])  # uncertain detail is disclosed
+    assert not any("effective_from" in n or "retrieved" in n for n in body["notices"])  # no internal wording
 
 
 def test_eligibility_uses_only_published_schemes():
@@ -108,6 +109,46 @@ def test_gate_hides_unapproved_domain(temp_data):
             dom["status"] = "proposed"
     _edit(temp_data / "approved_sources.json", unapprove)
     assert _published_ids() == []
+
+
+# ----- official apply link (never generated or guessed) -----
+
+def test_nikshay_has_no_apply_link_because_none_is_evidenced():
+    summary = next(s for s in client.get("/schemes").json()["schemes"] if s["scheme_id"] == "nikshay-poshan-yojana")
+    assert summary["apply_link"] is None
+    assert client.get("/schemes/nikshay-poshan-yojana").json()["apply_link"] is None
+
+
+def _with_link(temp_data, url, quote, domain_status="approved"):
+    def change(d):
+        d["apply_link"] = {"url": url, "source_id": "src-npy-scheme-details", "section": "Test"}
+        d["evidence"].append({"claim": "test link", "source_id": "src-npy-scheme-details", "page": 1, "quote": quote})
+    _edit(temp_data / "schemes" / "nikshay-poshan-yojana.json", change)
+
+    def domains(d):
+        d["domains"].append({"domain": "apply.example.gov.in", "status": domain_status})
+    _edit(temp_data / "approved_sources.json", domains)
+    return client.get("/schemes/nikshay-poshan-yojana").json()["apply_link"]
+
+
+def test_apply_link_shown_when_evidenced_and_domain_approved(temp_data):
+    assert _with_link(temp_data, "https://apply.example.gov.in/", "Apply at www.apply.example.gov.in today") == "https://apply.example.gov.in/"
+
+
+def test_apply_link_hidden_when_not_in_official_quote(temp_data):
+    assert _with_link(temp_data, "https://apply.example.gov.in/", "Apply at the district office") is None
+
+
+def test_apply_link_hidden_when_path_is_guessed(temp_data):
+    assert _with_link(temp_data, "https://apply.example.gov.in/guessed-form", "Apply at apply.example.gov.in") is None
+
+
+def test_apply_link_hidden_when_domain_not_approved(temp_data):
+    assert _with_link(temp_data, "https://apply.example.gov.in/", "apply.example.gov.in", domain_status="proposed") is None
+
+
+def test_apply_link_hidden_when_not_https(temp_data):
+    assert _with_link(temp_data, "http://apply.example.gov.in/", "apply.example.gov.in") is None
 
 
 def test_gate_hides_stale_source(temp_data):

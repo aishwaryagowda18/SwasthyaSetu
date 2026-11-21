@@ -198,6 +198,7 @@
     },
     {
       "type": "unconfirmed",
+      "public_note": "The date from which the Rs 1,000 monthly amount applies is not yet confirmed from an official source. The increase was announced on 7 October 2024.",
       "detail": "Effective date of the Rs 1,000 rate. 7 October 2024 is the announcement date. A later release reportedly gives 1 November 2024, but this was not retrieved or confirmed, so effective_from is left empty."
     },
     {

@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/* Design system adapted from the "Whitepace" SaaS landing page style:
+   deep navy bands, bright blue buttons, yellow accent and brush underline, Inter. */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #212529;
+  --color-card: #ffffff;
+  --color-primary: #4f9cf9;
+  --color-primary-foreground: #ffffff;
+  --color-muted: #f4f8fe;
+  --color-muted-foreground: #5b6470;
+  --color-border: #dbe6f3;
+  --color-navy: #043873;
+  --color-blue: #4f9cf9;
+  --color-sky: #a7cefc;
+  --color-yellow: #ffe492;
+  --color-success: #1f7a4d;
+  --color-warning: #8a5a00;
+  --color-destructive: #c2410c;
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Inter", sans-serif;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Component classes live in the components layer so Tailwind utilities can override them. */
+@layer components {
+  .container-tight {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 76rem;
+  }
+
+  .band-navy {
+    background: var(--color-navy);
+    color: #ffffff;
+    background-image: radial-gradient(circle at 85% 20%, rgb(79 156 249 / 0.18), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgb(167 206 252 / 0.12), transparent 40%);
+  }
+
+  /* Yellow brush-stroke underline under key words */
+  .highlight {
+    background-image: linear-gradient(transparent 72%, var(--color-yellow) 72%, var(--color-yellow) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    padding: 0 0.1em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .band-navy .highlight,
+  .card-navy .highlight {
+    background-image: linear-gradient(transparent 72%, rgb(255 228 146 / 0.85) 72%, rgb(255 228 146 / 0.85) 92%, transparent 92%);
+  }
+
+  .card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    box-shadow: 0 10px 30px -12px rgb(4 56 115 / 0.18);
+  }
+  .card-soft { background: var(--color-muted); }
+  .card-accent { background: #fff7db; border-color: #f5d97a; }
+  .card-blue { background: var(--color-blue); color: #ffffff; border-color: var(--color-blue); }
+  .card-navy { background: var(--color-navy); color: #ffffff; border-color: var(--color-navy); }
+  .card-sm { border-radius: 0.75rem; }
+
+  .card-hover {
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -14px rgb(4 56 115 / 0.3);
+  }
+
+  .arrow-circle {
+    display: inline-grid;
+    place-items: center;
+    height: 2.25rem;
+    width: 2.25rem;
+    border-radius: 9999px;
+    background: var(--color-blue);
+    color: #ffffff;
+    flex-shrink: 0;
+  }
+  .card-navy .arrow-circle,
+  .card-blue .arrow-circle { background: var(--color-yellow); color: var(--color-navy); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    background: #e8f1fe;
+    color: var(--color-navy);
+  }
+  .badge-eligible { background: #dcf5e7; color: var(--color-success); }
+  .badge-info { background: #fff1c2; color: var(--color-warning); }
+  .badge-no { background: #eef1f5; color: var(--color-muted-foreground); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .btn-primary { background: var(--color-blue); color: #ffffff; }
+  .btn-primary:hover { background: #3a8bf2; }
+  .btn-accent { background: var(--color-yellow); color: var(--color-navy); }
+  .btn-accent:hover { background: #ffd966; }
+  .btn-outline { border: 1px solid var(--color-blue); background: #ffffff; color: var(--color-navy); }
+  .btn-outline:hover { background: #eef5ff; }
+  .btn-ghost-light { border: 1px solid rgb(255 255 255 / 0.6); color: #ffffff; }
+  .btn-ghost-light:hover { background: rgb(255 255 255 / 0.1); }
+
+  .field {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid #c9d8ea;
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+  .field:focus { border-color: var(--color-blue); }
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-yellow);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-navy);
+}

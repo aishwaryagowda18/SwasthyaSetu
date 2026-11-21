@@ -15,7 +15,7 @@ from app.models import (
     SchemeSummary,
     SourceRef,
 )
-from app.schemes import published_records, published_rules
+from app.schemes import load_all, official_apply_link, published_records, published_rules
 
 APP_VERSION = "0.1.0"
 SERVICE_NAME = "schemesaathi-api"
@@ -59,6 +59,7 @@ def _summary(rec: dict) -> dict:
         "state": rec.get("state"),
         "issuing_body": rec.get("issuing_body", ""),
         "last_checked": min(s["checked_at"] for s in rec["sources"]),
+        "apply_link": official_apply_link(rec, load_all()[1]),
     }
 
 
@@ -88,7 +89,9 @@ def get_scheme(scheme_id: str) -> SchemeDetail:
         historical_benefits=_cited(rec.get("historical_benefits", [])),
         required_documents=_cited(rec.get("required_documents", []), "name"),
         how_to_apply=_cited(rec.get("how_to_apply", [])),
-        notices=[f["detail"] for f in rec.get("flags", []) if f.get("type") == "unconfirmed"],
+        # Citizens see a plain-language note; internal reviewer wording is never shown.
+        notices=[f.get("public_note") or "Some details of this scheme are awaiting official confirmation."
+                 for f in rec.get("flags", []) if f.get("type") == "unconfirmed"],
         sources=[SourceRef(id=s["id"], title=s["title"], url=s["url"], checked_at=s["checked_at"])
                  for s in rec["sources"]],
         human_reviewed=True,

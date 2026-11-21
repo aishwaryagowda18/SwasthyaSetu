@@ -141,6 +141,36 @@ def test_cached_copy_note_is_information_only():
     assert any("cached copy" in i.message and not i.exception for i in res.issues)
 
 
+def test_missing_apply_link_is_information_only():
+    res = check(good_record())
+    assert res.category == AUTO_SUPPORTED
+    assert any("no official application link" in i.message and not i.exception for i in res.issues)
+
+
+def test_evidenced_apply_link_passes():
+    rec = good_record()
+    rec["apply_link"] = {"url": "https://health.gov.in/apply", "source_id": "src-test", "page": 2}
+    rec["evidence"].append({"claim": "link", "source_id": "src-test", "page": 2, "quote": "apply at health.gov.in/apply"})
+    docs = {"src-test": SourceDoc(pages=[PAGE1, PAGE2 + " apply at health.gov.in/apply"], text="", content_hash="sha256:abc")}
+    assert check(rec, docs=docs).category == AUTO_SUPPORTED
+
+
+def test_apply_link_not_in_quotes_needs_attention():
+    rec = good_record()
+    rec["apply_link"] = {"url": "https://health.gov.in/guessed", "source_id": "src-test", "page": 2}
+    res = check(rec)
+    assert res.category == NEEDS_ATTENTION
+    assert any("does not appear in quotes" in i.message for i in res.issues)
+
+
+def test_apply_link_on_unapproved_domain_needs_attention():
+    rec = good_record()
+    rec["apply_link"] = {"url": "https://new.gov.in/", "source_id": "src-test", "page": 2}
+    rec["evidence"].append({"claim": "link", "source_id": "src-test", "page": 2, "quote": "visit new.gov.in"})
+    docs = {"src-test": SourceDoc(pages=[PAGE1, PAGE2 + " visit new.gov.in"], text="", content_hash="sha256:abc")}
+    assert any("not an approved source domain" in i.message for i in check(rec, docs=docs).issues)
+
+
 def test_missing_fields_need_attention():
     rec = good_record()
     rec["how_to_apply"] = []

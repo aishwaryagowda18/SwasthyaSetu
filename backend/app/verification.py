@@ -202,6 +202,24 @@ def check_record(record: dict, approved: dict[str, str], docs: dict[str, SourceD
                 if lows and highs and max(lows) > min(highs):
                     add(Issue(CONFLICTING, f"group '{group.key}': {f} must be >= {max(lows)} and <= {min(highs)}"))
 
+    # Official application link: optional, but if present it must be evidenced (never guessed)
+    link = record.get("apply_link")
+    if not link:
+        add(Issue(NEEDS_ATTENTION, "no official application link recorded", exception=False))
+    else:
+        url, lsid = link.get("url", ""), link.get("source_id")
+        host = urlparse(url).hostname or ""
+        bare = re.sub(r"^www\.", "", host.lower()) + urlparse(url).path.rstrip("/").lower()
+        quotes = " ".join(e.get("quote", "") for e in evidence if e.get("source_id") == lsid).lower()
+        if not url.startswith("https://"):
+            add(Issue(NEEDS_ATTENTION, f"apply link is not https: {url}"))
+        if lsid not in sources:
+            add(Issue(MISSING_SOURCE, f"apply link cites an unknown source: {lsid}"))
+        if approved.get(host) != "approved":
+            add(Issue(NEEDS_ATTENTION, f"apply link domain {host} is not an approved source domain"))
+        if bare not in quotes:
+            add(Issue(NEEDS_ATTENTION, f"apply link {url} does not appear in quotes from {lsid}"))
+
     # Flags written by preparers or reviewers
     for flag in record.get("flags", []):
         kind = flag.get("type", "")
