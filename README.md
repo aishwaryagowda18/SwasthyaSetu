@@ -35,5 +35,5 @@ schemes, understand benefits, check eligibility and prepare application document
 
 ## Status
 
-Phase 0 – project setup. No application code yet.
+Phase 0 – project setup. Backend skeleton with a `/health` endpoint (see [backend/README.md](backend/README.md)).
 See [docs/architecture.md](docs/architecture.md) for the agreed plan.

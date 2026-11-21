@@ -214,7 +214,7 @@ def main() -> None:
     fieldnames = TRACKING_COLUMNS[:1] + ["source_row_id"] + TRACKING_COLUMNS[1:] + \
         [c for c in COLUMN_MAP.values() if c != "source_row_id"]
     with open(output_csv, "w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(out)
 

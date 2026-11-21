@@ -1,0 +1,9 @@
+[project]
+name = "schemesaathi-api"
+version = "0.1.0"
+description = "Backend for SchemeSaathi (not an official government service)"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
