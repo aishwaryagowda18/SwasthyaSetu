@@ -135,7 +135,7 @@ A fixed evaluation set of about 100 questions with known answers and sources is 
 | M2 | Logged in but not an admin | Blocked by the server, not just hidden in the page |
 | M3 | Rule edited without a source document and page | Cannot be saved |
 | M4 | Every admin change | Recorded in the audit log: who, what, when |
-| M5 | Role permissions | Viewer reads; editor edits; only admin publishes as verified |
+| M5 | Role permissions and independent review | Viewer reads; editor edits; only an independent reviewer can verify and publish a scheme, and the server rejects a reviewer who edited that version |
 | M6 | Change-tracking alert | Official page changes → alert for admin review |
 
 ### 4.8 Frontend (when built)
