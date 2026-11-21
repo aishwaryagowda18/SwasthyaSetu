@@ -68,10 +68,12 @@ def test_every_source_is_on_an_approved_domain_and_dated(path):
     for source in load(path)["sources"]:
         assert urlparse(source["url"]).hostname in APPROVED
         assert source["checked_at"]
-        if source.get("retrieved_by_system", True):
-            assert source["content_hash"].startswith("sha256:")
-        else:  # could not be fetched: must say so and carry no fingerprint
+        if not source.get("retrieved_by_system", True):  # could not be fetched: must say so, no fingerprint
             assert source["content_hash"] is None and source["notes"]
+        elif source["kind"] == "pdf":
+            assert source["content_hash"].startswith("sha256:")
+        else:  # webpages change on every visit (e.g. visitor counters); quotes are re-checked instead
+            assert source["content_hash"] is None or source["content_hash"].startswith("sha256:")
 
 
 def test_npy_current_and_historical_amounts(npy):

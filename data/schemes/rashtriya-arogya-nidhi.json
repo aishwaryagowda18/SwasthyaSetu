@@ -1,0 +1,138 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from official sources. Needs independent human review before publishing.",
+  "scheme_id": "rashtriya-arogya-nidhi",
+  "name": "Umbrella Scheme of Rashtriya Arogya Nidhi (RAN), including Health Minister's Cancer Patient Fund",
+  "level": "central",
+  "state": null,
+  "issuing_body": "Ministry of Health and Family Welfare, Government of India",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-pib-ran-2023-07-21",
+      "title": "Update on Rashtra Aarogya Nidhi (Lok Sabha written reply)",
+      "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1941461",
+      "kind": "webpage",
+      "issuing_body": "Press Information Bureau, Ministry of Health and Family Welfare",
+      "document_date": "2023-07-21",
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Webpage includes a visitor counter, so no fingerprint is stored; quotes are re-checked instead."
+    },
+    {
+      "id": "src-pib-ran-2022-07-22",
+      "title": "Details of Financial Assistance for Poor Patients",
+      "url": "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1843846&reg=3&lang=2",
+      "kind": "webpage",
+      "issuing_body": "Press Information Bureau, Ministry of Health and Family Welfare",
+      "document_date": "2022-07-22",
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Describes the NHA IT platform used for applications."
+    }
+  ],
+  "rules": {
+    "scheme_id": "rashtriya-arogya-nidhi",
+    "name": "Umbrella Scheme of Rashtriya Arogya Nidhi (RAN), including Health Minister's Cancer Patient Fund",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "eligibility",
+        "mode": "all",
+        "rules": [
+          {
+            "operator": "manual_check",
+            "message": "Family lives below the State/UT-wise threshold poverty line",
+            "source_id": "src-pib-ran-2023-07-21",
+            "section": "Release of 21 July 2023"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Suffering from a life-threatening disease (heart, kidney, liver, cancer, etc.) or a specified rare disease",
+            "source_id": "src-pib-ran-2023-07-21",
+            "section": "Release of 21 July 2023"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Treatment at a Super Specialty Government hospital/institute (for cancer: Regional Cancer Centres, Tertiary Care Cancer Centres or State Cancer Institutes)",
+            "source_id": "src-pib-ran-2023-07-21",
+            "section": "Release of 21 July 2023"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "One-time financial assistance of up to ₹15 lakh for treatment of life-threatening diseases (heart, kidney, liver, etc.) - Rashtriya Arogya Nidhi.",
+      "source_id": "src-pib-ran-2023-07-21",
+      "section": "Release of 21 July 2023"
+    },
+    {
+      "text": "Up to ₹15 lakh for cancer treatment - Health Minister's Cancer Patient Fund.",
+      "source_id": "src-pib-ran-2023-07-21",
+      "section": "Release of 21 July 2023"
+    },
+    {
+      "text": "Up to ₹20 lakh for specified rare diseases.",
+      "source_id": "src-pib-ran-2023-07-21",
+      "section": "Release of 21 July 2023"
+    }
+  ],
+  "required_documents": [],
+  "how_to_apply": [
+    {
+      "text": "Applications are handled on the National Health Authority IT platform, which identifies eligible applicants online through the Government's existing database.",
+      "source_id": "src-pib-ran-2022-07-22",
+      "section": "Release of 22 July 2022"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Who is eligible",
+      "source_id": "src-pib-ran-2023-07-21", "section": "Release of 21 July 2023",
+      "quote": "provides one-time financial assistance to poor patients living below State/UT wise threshold poverty line and suffering from life threatening diseases relating to heart, kidney, liver, cancer, etc. for treatment at any of Super Specialty Government hospitals/institutes."
+    },
+    {
+      "claim": "RAN maximum Rs 15 lakh",
+      "source_id": "src-pib-ran-2023-07-21", "section": "Release of 21 July 2023",
+      "quote": "Financial assistance for treatment of life-threatening diseases relating to heart, kidney, liver, etc. at Government hospitals/institutes having Super Specialty facilities; ( Maximum financial assistance is Rs. 15 lakhs )"
+    },
+    {
+      "claim": "HMCPF maximum Rs 15 lakh",
+      "source_id": "src-pib-ran-2023-07-21", "section": "Release of 21 July 2023",
+      "quote": "Financial assistance for treatment of cancer at Regional Cancer Centres (RCCs)/ Tertiary Care Cancer Centres (TCCCs) and State Cancer Institutes (SCIs); ( Maximum financial assistance is Rs. 15 lakhs )"
+    },
+    {
+      "claim": "Rare diseases maximum Rs 20 lakh",
+      "source_id": "src-pib-ran-2023-07-21", "section": "Release of 21 July 2023",
+      "quote": "for specified rare diseases for treatment at Government hospitals/institutes having Super Specialty facilities; ( Maximum financial assistance is Rs. 20 lakhs )"
+    },
+    {
+      "claim": "NHA IT platform",
+      "source_id": "src-pib-ran-2022-07-22", "section": "Release of 22 July 2022",
+      "quote": "Government has launched these schemes on the National Health Authority IT platform. It enables release of financial assistance to the eligible applicants identified online through the Government’s existing database."
+    }
+  ],
+  "flags": [
+    {
+      "type": "unconfirmed",
+      "detail": "Current scheme guidelines (application form, required documents, how the grant is paid) could not be retrieved: the MoHFW guidelines PDF returned 404 / certificate errors and main.mohfw.gov.in does not resolve. Required documents are therefore empty."
+    },
+    {
+      "type": "unconfirmed",
+      "detail": "The poverty threshold is State/UT-wise, so income is not checked automatically."
+    }
+  ],
+  "notes": [
+    "The Health Minister's Discretionary Grant (up to Rs 1.25 lakh, family income up to Rs 1.25 lakh) is a separate scheme described in src-pib-ran-2022-07-22; it is not part of this record."
+  ]
+}

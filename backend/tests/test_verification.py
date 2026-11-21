@@ -133,6 +133,14 @@ def test_reviewer_confirmed_unfetchable_source_is_information_only():
     assert any("confirmed by reviewer" in i.message and not i.exception for i in res.issues)
 
 
+def test_cached_copy_note_is_information_only():
+    cached = SourceDoc(pages=DOC.pages, text=DOC.text, content_hash="sha256:abc",
+                       note="live download failed (SSL); checked the cached copy instead")
+    res = check(good_record(), docs={"src-test": cached})
+    assert res.category == AUTO_SUPPORTED
+    assert any("cached copy" in i.message and not i.exception for i in res.issues)
+
+
 def test_missing_fields_need_attention():
     rec = good_record()
     rec["how_to_apply"] = []

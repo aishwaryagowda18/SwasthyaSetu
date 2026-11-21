@@ -1,0 +1,113 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from official sources. Needs independent human review before publishing.",
+  "scheme_id": "niramaya",
+  "name": "Niramaya Health Insurance Scheme",
+  "level": "central",
+  "state": null,
+  "issuing_body": "The National Trust, Ministry of Social Justice and Empowerment, Government of India",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-nt-schemes-at-a-glance",
+      "title": "Our Schemes at a glance - The National Trust",
+      "url": "https://thenationaltrust.gov.in/content/innerpage/our-schemes-at-a-glance.php",
+      "kind": "webpage",
+      "issuing_body": "The National Trust, Ministry of Social Justice and Empowerment",
+      "document_date": null,
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Section V. NIRAMAYA. The scheme's own page (content/scheme/niramaya.php) is built with JavaScript and returned no text."
+    },
+    {
+      "id": "src-pib-niramaya-2024-12-11",
+      "title": "Parliament question: Health and life insurance for persons with disabilities",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2083103",
+      "kind": "webpage",
+      "issuing_body": "Press Information Bureau, Ministry of Social Justice and Empowerment",
+      "document_date": "2024-12-11",
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Confirms the scheme is operational in 2024-25."
+    }
+  ],
+  "rules": {
+    "scheme_id": "niramaya",
+    "name": "Niramaya Health Insurance Scheme",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "eligibility",
+        "mode": "all",
+        "rules": [
+          {
+            "field": "has_disability",
+            "operator": "is_true",
+            "message": "Person with a disability",
+            "source_id": "src-nt-schemes-at-a-glance",
+            "section": "V. NIRAMAYA (Health Insurance Scheme)"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Disability is autism, cerebral palsy, intellectual disability (mental retardation) or multiple disabilities",
+            "source_id": "src-nt-schemes-at-a-glance",
+            "section": "V. NIRAMAYA (Health Insurance Scheme)"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "Health insurance cover of up to ₹1 lakh, including OPD treatment (medicines, pathology, diagnostic tests), regular check-ups, preventive dentistry, surgeries, corrective surgeries, ongoing therapies, alternative medicine and transport costs.",
+      "source_id": "src-nt-schemes-at-a-glance",
+      "section": "V. NIRAMAYA (Health Insurance Scheme)"
+    }
+  ],
+  "required_documents": [],
+  "how_to_apply": [],
+  "evidence": [
+    {
+      "claim": "Who it is for",
+      "source_id": "src-nt-schemes-at-a-glance", "section": "V. NIRAMAYA",
+      "quote": "The objective of Niramaya scheme is to provide affordable Health Insurance to persons with Autism, Cerebral Palsy, Mental Retardation and Multiple Disabilities."
+    },
+    {
+      "claim": "Cover up to Rs 1 lakh",
+      "source_id": "src-nt-schemes-at-a-glance", "section": "V. NIRAMAYA",
+      "quote": "All enrolled beneficiaries will get a health insurance cover of up to Rs. 1.0 lakh"
+    },
+    {
+      "claim": "What is covered",
+      "source_id": "src-nt-schemes-at-a-glance", "section": "V. NIRAMAYA",
+      "quote": "OPD treatment including the medicines, pathology, diagnostic tests, etc, Regular Medical checkup for non-ailing disabled, Dental Preventive Dentistry, Surgery to prevent further aggravation of disability"
+    },
+    {
+      "claim": "Current disability terms",
+      "source_id": "src-pib-niramaya-2024-12-11", "section": "Release of 11 December 2024",
+      "quote": "The National Trust implements the Niramaya Health Insurance Scheme for Persons with Autism, Cerebral Palsy, Intellectual Disability (earlier Mental Retardation) and Multiple Disabilities."
+    },
+    {
+      "claim": "Operational in 2024-25",
+      "source_id": "src-pib-niramaya-2024-12-11", "section": "Release of 11 December 2024",
+      "quote": "In the current year i.e. 2024-25, 47307 beneficiaries are enrolled in the Niramaya Health Insurance Scheme, till date."
+    }
+  ],
+  "flags": [
+    {
+      "type": "unconfirmed",
+      "detail": "Enrolment process, premium and required documents were not retrieved: the scheme's official page needs JavaScript and returned no text. How to apply and required documents are therefore empty."
+    }
+  ],
+  "notes": [
+    "The National Trust Act disabilities are narrower than 'any disability', so the specific disability is a manual check."
+  ]
+}

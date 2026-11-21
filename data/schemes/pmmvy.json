@@ -1,0 +1,230 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from official sources. Needs independent human review before publishing.",
+  "scheme_id": "pmmvy",
+  "name": "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
+  "level": "central",
+  "state": null,
+  "issuing_body": "Ministry of Women and Child Development, Government of India",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-pmmvy-rules-2022",
+      "title": "Pradhan Mantri Matru Vandana Yojana Rules, 2022 (Gazette of India, G.S.R. 898(E))",
+      "url": "https://wcd.gov.in/documents/uploaded/1777963076.pdf",
+      "kind": "pdf",
+      "issuing_body": "Ministry of Women and Child Development",
+      "document_date": "2022-12-22",
+      "checked_at": "2026-11-21",
+      "content_hash": "sha256:2b32737cb4d15d1bdb136402c17e0863119e9007e333518df7328c010199c613",
+      "retrieved_by_system": true,
+      "notes": "Hindi on pages 1-3, English on pages 4-5. Downloaded through Windows because the site's certificate chain fails Python's check."
+    },
+    {
+      "id": "src-wcd-pmmvy-page",
+      "title": "Pradhan Mantri Matru Vandana Yojana - Ministry of Women and Child Development",
+      "url": "https://wcd.gov.in/offerings/pradhan-mantri-matru-vandana-yojana",
+      "kind": "webpage",
+      "issuing_body": "Ministry of Women and Child Development",
+      "document_date": null,
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Official scheme page; gives amounts in figures."
+    }
+  ],
+  "rules": {
+    "scheme_id": "pmmvy",
+    "name": "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "eligibility",
+        "mode": "all",
+        "rules": [
+          {
+            "field": "gender",
+            "operator": "eq",
+            "value": "female",
+            "message": "Women only",
+            "source_id": "src-pmmvy-rules-2022",
+            "page": 4,
+            "section": "3. Beneficiaries entitled to maternity benefit"
+          },
+          {
+            "field": "is_pregnant_or_lactating",
+            "operator": "is_true",
+            "message": "Pregnant women and lactating mothers",
+            "source_id": "src-pmmvy-rules-2022",
+            "page": 4,
+            "section": "4. Registration of beneficiaries"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Belongs to a socially and economically disadvantaged section of society (criteria as per the Mission Shakti Guidelines)",
+            "source_id": "src-pmmvy-rules-2022",
+            "page": 4,
+            "section": "3. Beneficiaries entitled to maternity benefit, (1)"
+          },
+          {
+            "operator": "manual_check",
+            "message": "For the first living child, or for the second living child only if the second child is a girl",
+            "source_id": "src-pmmvy-rules-2022",
+            "page": 4,
+            "section": "3. Beneficiaries entitled to maternity benefit, (2)"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "₹5,000 for the first living child, in two instalments, paid directly to the bank or post office account (DBT).",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 4,
+      "section": "7. Number of instalments, (1)",
+      "supporting_source_ids": ["src-wcd-pmmvy-page"]
+    },
+    {
+      "text": "₹6,000 for the second living child if the child is a girl, in one instalment after birth.",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 5,
+      "section": "7. Number of instalments, (2)",
+      "supporting_source_ids": ["src-wcd-pmmvy-page"]
+    },
+    {
+      "text": "For the first child, the remaining cash incentive under Janani Suraksha Yojana after institutional delivery, so that on average a woman gets ₹6,000.",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 5,
+      "section": "7. Number of instalments, (3)",
+      "supporting_source_ids": ["src-wcd-pmmvy-page"]
+    }
+  ],
+  "required_documents": [
+    {
+      "name": "Mother and Child Protection (MCP) Card - the main verification tool",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 4,
+      "section": "5. Verification Tool"
+    },
+    {
+      "name": "Bank account or post office account for direct transfer",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 4,
+      "section": "6. Disbursement of maternity benefit"
+    },
+    {
+      "name": "Aadhaar, as required by the Ministry's notifications under section 7 of the Aadhaar Act",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 4,
+      "section": "4. Registration of beneficiaries, (ii)"
+    }
+  ],
+  "how_to_apply": [
+    {
+      "text": "Register at an Anganwadi centre or an approved government health facility, or through online self-registration.",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 4,
+      "section": "4. Registration of beneficiaries, (i)"
+    },
+    {
+      "text": "First child, first instalment: on registration of pregnancy and at least one ante-natal check-up within six months from the last menstrual period.",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 4,
+      "section": "7. Number of instalments, Table"
+    },
+    {
+      "text": "Second child (girl): the birth must be registered under the scheme and the child must have received all due vaccines up to 14 weeks of age.",
+      "source_id": "src-pmmvy-rules-2022",
+      "page": 5,
+      "section": "7. Number of instalments, (2)"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Disadvantaged sections, criteria per Mission Shakti",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "The women belonging to socially and economically disadvantaged sections of society are entitled to get the benefit and the criteria for determining socially and economically disadvantaged sections of society shall be as per the Mission Shakti Guidelines."
+    },
+    {
+      "claim": "First and second living child; second must be a girl",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "for the first living Child and second living Child shall be as per the provisions of the Pradhan Mantri Matru Vandana Yojana: Provided that the second Child shall be a girl."
+    },
+    {
+      "claim": "Pregnant women and lactating mothers; registration places",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "The maternity benefit shall be given to all eligible pregnant women and lactating mothers, as referred to in rule 3 who have registered themselves at ... or through online self-registration"
+    },
+    {
+      "claim": "MCP card",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "The Mother Child Protection Card shall be the primary verification tool"
+    },
+    {
+      "claim": "DBT to bank or post office account",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "The amount of the maternity benefit shall be directly transferred to the beneficiary’s bank account or post office account in Direct Benefit Transfer mode."
+    },
+    {
+      "claim": "Aadhaar notifications",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "under section 7 of the Aadhaar"
+    },
+    {
+      "claim": "First child amount, two instalments",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "The maternity benefit of five thousand rupees or such amount as provided under the Guidelines for first living child which shall be provided in two instalments"
+    },
+    {
+      "claim": "First instalment condition",
+      "source_id": "src-pmmvy-rules-2022", "page": 4,
+      "quote": "On registration of pregnancy and at least one Ante- natal check-up within six months from Last Menstrual Period date"
+    },
+    {
+      "claim": "Second child amount, girl, one instalment",
+      "source_id": "src-pmmvy-rules-2022", "page": 5,
+      "quote": "For the second living child, the amount of benefit of six thousand rupees or such amount as prescribed under the Scheme Guidelines shall be given in one instalment after the birth: Provided the second child shall be a girl child"
+    },
+    {
+      "claim": "Second child conditions",
+      "source_id": "src-pmmvy-rules-2022", "page": 5,
+      "quote": "the girl child has received all due vaccines till the child attains age of fourteen weeks from the date of birth"
+    },
+    {
+      "claim": "JSY top-up to average Rs 6,000",
+      "source_id": "src-pmmvy-rules-2022", "page": 5,
+      "quote": "so that on an average, a woman gets an amount of six thousand rupees only."
+    },
+    {
+      "claim": "Rs 5,000 in figures",
+      "source_id": "src-wcd-pmmvy-page", "section": "Brief",
+      "quote": "cash incentives of ₹5,000/- is provided directly to the Bank/Post Office account of the beneficiary in Direct Benefit Transfer (DBT) mode for first child."
+    },
+    {
+      "claim": "Rs 6,000 average in figures",
+      "source_id": "src-wcd-pmmvy-page", "section": "Brief",
+      "quote": "so that on an average a woman gets ₹6,000/-."
+    },
+    {
+      "claim": "Rs 6,000 second girl child in figures",
+      "source_id": "src-wcd-pmmvy-page", "section": "Brief",
+      "quote": "Under Mission Shakti, cash incentive of ₹6,000/- is also provided under PMMVY to eligible beneficiaries for second child subject to the second child being a girl."
+    }
+  ],
+  "flags": [
+    {
+      "type": "unconfirmed",
+      "detail": "The list of criteria for 'socially and economically disadvantaged sections' (Mission Shakti Guidelines, e.g. SC/ST, disability, income limits) was not retrieved from an official document (the FAQ PDF failed a certificate check), so it is a manual check and category/income are not checked automatically."
+    }
+  ],
+  "notes": [
+    "The Rules allow the Central Government to change the amounts from time to time (rule 8); amounts here are as of the 2022 Rules and the current Ministry page."
+  ]
+}

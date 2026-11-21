@@ -52,11 +52,18 @@ def _cache_path(url: str) -> Path:
     return CACHE / hashlib.sha256(url.encode()).hexdigest()
 
 
-def fetch(url: str, offline: bool) -> tuple[bytes | None, str | None]:
-    """Return (content, error). Downloads are cached so --offline can reuse them."""
+def fetch(url: str, offline: bool) -> tuple[bytes | None, str | None, str | None]:
+    """Return (content, error, note). Live failures fall back to a cached copy, with a note."""
     path = _cache_path(url)
     if offline:
-        return (path.read_bytes(), None) if path.exists() else (None, "not cached (offline run)")
+        return (path.read_bytes(), None, None) if path.exists() else (None, "not cached (offline run)", None)
+    content, error = _download(url, path)
+    if content is None and path.exists():
+        return path.read_bytes(), None, f"live download failed ({error}); checked the cached copy instead"
+    return content, error, None
+
+
+def _download(url: str, path: Path) -> tuple[bytes | None, str | None]:
     error = None
     for attempt in range(2):  # one retry for temporary network errors
         if attempt:
@@ -79,9 +86,15 @@ def fetch(url: str, offline: bool) -> tuple[bytes | None, str | None]:
     return None, error
 
 
-def to_doc(content: bytes | None, error: str | None) -> SourceDoc:
+def to_doc(content: bytes | None, error: str | None, note: str | None = None) -> SourceDoc:
     if content is None:
         return SourceDoc(error=error)
+    doc = _parse(content)
+    doc.note = note
+    return doc
+
+
+def _parse(content: bytes) -> SourceDoc:
     digest = "sha256:" + hashlib.sha256(content).hexdigest()
     if content[:5] == b"%PDF-":
         try:
@@ -130,7 +143,7 @@ def main(argv=None) -> int:
     with legacy_path.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
             url = row.get("official_website", "").strip()
-            _, err = fetch(url, args.offline) if url else (None, "no URL")
+            _, err, _ = fetch(url, args.offline) if url else (None, "no URL", None)
             rows.append({"key": row["draft_id"], "record": f"{legacy_path.name}#{row['draft_id']}",
                          "name": row["scheme_name"], "level": row["level"], "state": row["state"],
                          "review_status": "legacy draft", "reviewed_by": "", "reviewed_at": "",

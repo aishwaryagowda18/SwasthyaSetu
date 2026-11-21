@@ -38,6 +38,7 @@ class SourceDoc:
     text: str = ""  # whole text (webpage, or all PDF pages joined)
     content_hash: str | None = None
     error: str | None = None  # set when the source could not be fetched or read
+    note: str | None = None  # e.g. "live download failed; checked cached copy"
 
 
 @dataclass
@@ -153,6 +154,8 @@ def check_record(record: dict, approved: dict[str, str], docs: dict[str, SourceD
                 add(Issue(NEEDS_ATTENTION, f"{sid}: could not be fetched ({reason})"))
         elif src.get("content_hash") and doc.content_hash and doc.content_hash != src["content_hash"]:
             add(Issue(NEEDS_ATTENTION, f"{sid}: document content has changed since it was checked - re-review"))
+        if doc and doc.note:
+            add(Issue(NEEDS_ATTENTION, f"{sid}: {doc.note}", exception=False))
 
     # Quotes appear on the cited page
     for ev in evidence:

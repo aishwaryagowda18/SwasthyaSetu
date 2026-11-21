@@ -1,0 +1,192 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from official sources. Needs independent human review before publishing.",
+  "scheme_id": "ab-pmjay",
+  "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB PM-JAY)",
+  "level": "central",
+  "state": null,
+  "issuing_body": "Ministry of Health and Family Welfare / National Health Authority, Government of India",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-pib-pmjay-70plus-2024-09-11",
+      "title": "Cabinet approves health coverage to all senior citizens of the age 70 years and above irrespective of income under AB PM-JAY",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2053883",
+      "kind": "webpage",
+      "issuing_body": "Press Information Bureau, Ministry of Health and Family Welfare",
+      "document_date": "2024-09-11",
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Webpage includes a visitor counter, so no fingerprint is stored; quotes are re-checked instead."
+    },
+    {
+      "id": "src-pib-pmjay-2024-11-29",
+      "title": "Update on Health Insurance for Senior Citizens",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2079021&reg=3&lang=2",
+      "kind": "webpage",
+      "issuing_body": "Press Information Bureau, Ministry of Health and Family Welfare",
+      "document_date": "2024-11-29",
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Gives the expansion date 29.10.2024."
+    },
+    {
+      "id": "src-pib-vay-vandana-2024-12-09",
+      "title": "Enrollment for Ayushman Vay Vandana Cards reaches 25 lakhs",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2082288&reg=48&lang=2",
+      "kind": "webpage",
+      "issuing_body": "Press Information Bureau, Ministry of Health and Family Welfare",
+      "document_date": "2024-12-09",
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Registration channels for the Ayushman Vay Vandana Card."
+    }
+  ],
+  "rules": {
+    "scheme_id": "ab-pmjay",
+    "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB PM-JAY)",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "who",
+        "mode": "any",
+        "rules": [
+          {
+            "field": "age",
+            "operator": "gte",
+            "value": 70,
+            "message": "Aged 70 years or above (irrespective of income)",
+            "source_id": "src-pib-pmjay-70plus-2024-09-11",
+            "section": "Cabinet approval, 11 September 2024"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Member of a family already covered under AB PM-JAY (poor and vulnerable families identified in SECC 2011, as later expanded)",
+            "source_id": "src-pib-pmjay-70plus-2024-09-11",
+            "section": "Cabinet approval, 11 September 2024"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "Health cover of up to ₹5 lakh per family per year for secondary and tertiary care hospitalisation; all members of eligible families are covered irrespective of age.",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11",
+      "section": "Cabinet approval, 11 September 2024"
+    },
+    {
+      "text": "People aged 70 or above in families already covered get an additional top-up cover of up to ₹5 lakh per year for themselves.",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11",
+      "section": "Cabinet approval, 11 September 2024"
+    },
+    {
+      "text": "Other people aged 70 or above get a cover of up to ₹5 lakh per year on a family basis (Ayushman Vay Vandana Card).",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11",
+      "section": "Cabinet approval, 11 September 2024"
+    },
+    {
+      "text": "The Vay Vandana card covers all pre-existing diseases from the first day, without a waiting period.",
+      "source_id": "src-pib-vay-vandana-2024-12-09",
+      "section": "Release of 9 December 2024"
+    }
+  ],
+  "required_documents": [],
+  "how_to_apply": [
+    {
+      "text": "People aged 70 or above can register for the Ayushman Vay Vandana Card at the nearest empanelled hospital, or self-register through the Ayushman app or www.beneficiary.nha.gov.in. Helpline: 14555.",
+      "source_id": "src-pib-vay-vandana-2024-12-09",
+      "section": "Release of 9 December 2024"
+    },
+    {
+      "text": "People aged 70 or above already in CGHS, ECHS or Ayushman CAPF must choose between their existing scheme and AB PM-JAY; private insurance or ESI does not stop them from using AB PM-JAY.",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11",
+      "section": "Cabinet approval, 11 September 2024"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "70+ eligible irrespective of income",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "With this approval, all senior citizens of the age 70 years and above irrespective of their socio- economic status would be eligible to avail the benefits of AB PM-JAY."
+    },
+    {
+      "claim": "Rs 5 lakh per family per year",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "provides health cover of Rs. 5 lakh per family per year for secondary and tertiary care hospitalization"
+    },
+    {
+      "claim": "All members of eligible families covered",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "All members of the eligible families irrespective of age are covered under the scheme."
+    },
+    {
+      "claim": "Original beneficiary base",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "Initially, 10.74 crore poor and vulnerable families comprising the bottom 40% of India’s population were covered under the scheme."
+    },
+    {
+      "claim": "Top-up for 70+ in covered families",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "The senior citizens of the age 70 years and above belonging to families already covered under AB PM-JAY will get an additional top-up cover upto ₹5 lakh per year for themselves"
+    },
+    {
+      "claim": "Cover for other 70+",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "All other senior citizens of the age 70 years and above will get a cover upto ₹5 lakh per year on a family basis."
+    },
+    {
+      "claim": "CGHS / ECHS / CAPF choice",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "may either choose their existing scheme or opt for AB PMJAY"
+    },
+    {
+      "claim": "Private insurance / ESI",
+      "source_id": "src-pib-pmjay-70plus-2024-09-11", "section": "Cabinet approval",
+      "quote": "senior citizens of 70 years and above who are under private health insurance policies or Employees’ State Insurance scheme will be eligible to avail benefits under AB PM-JAY."
+    },
+    {
+      "claim": "Expansion date 29.10.2024",
+      "source_id": "src-pib-pmjay-2024-11-29", "section": "Release of 29 November 2024",
+      "quote": "irrespective of their socio-economic status on 29.10.2024."
+    },
+    {
+      "claim": "Pre-existing diseases covered",
+      "source_id": "src-pib-vay-vandana-2024-12-09", "section": "Release of 9 December 2024",
+      "quote": "covers all pre -existing diseases from first day itself without any waiting period."
+    },
+    {
+      "claim": "Registration channels",
+      "source_id": "src-pib-vay-vandana-2024-12-09", "section": "Release of 9 December 2024",
+      "quote": "They can visit nearest empanelled hospital for registration. For self-registration eligible citizens can download Ayushman app (from Google Play store) or visit www.beneficiary.nha.gov.in."
+    },
+    {
+      "claim": "Helpline",
+      "source_id": "src-pib-vay-vandana-2024-12-09", "section": "Release of 9 December 2024",
+      "quote": "Citizens can also call on the toll-free number 14555"
+    }
+  ],
+  "flags": [
+    {
+      "type": "unconfirmed",
+      "detail": "Eligibility for people under 70 depends on official beneficiary lists (SECC 2011 and later expansions), so it is a manual check. The scheme's operational guidelines on pmjay.gov.in / nha.gov.in could not be retrieved (connection failed)."
+    },
+    {
+      "type": "unconfirmed",
+      "detail": "Required documents for enrolment (for example for the Vay Vandana Card) were not stated in the retrieved official sources."
+    }
+  ],
+  "notes": [
+    "The 70+ expansion was approved by the Cabinet on 11 September 2024 and launched on 29 October 2024.",
+    "The Vay Vandana card was described in the 9 December 2024 release as covering around 2000 procedures; the 29 November 2024 release mentions 1961 procedures in the national package. Not used in benefits text."
+  ]
+}
