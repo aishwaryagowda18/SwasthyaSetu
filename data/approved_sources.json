@@ -1,0 +1,21 @@
+{
+  "_status": "Official source domains. Only domains with status 'approved' may be used for published schemes. Each approval is made by an admin.",
+  "domains": [
+    {
+      "domain": "tbcindia.mohfw.gov.in",
+      "issuing_body": "Central TB Division, Ministry of Health & Family Welfare",
+      "status": "approved",
+      "proposed_at": "2026-11-21",
+      "approved_by": "Aishwarya A",
+      "approved_at": "2026-11-21"
+    },
+    {
+      "domain": "www.pib.gov.in",
+      "issuing_body": "Press Information Bureau, Government of India",
+      "status": "approved",
+      "proposed_at": "2026-11-21",
+      "approved_by": "Aishwarya A",
+      "approved_at": "2026-11-21"
+    }
+  ]
+}
