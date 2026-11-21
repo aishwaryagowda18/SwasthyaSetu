@@ -12,8 +12,9 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from app.eligibility import check_eligibility, evaluate_scheme
-from app.main import SAMPLE_TEST_SCHEMES, app
+from app.main import app
 from app.models import Profile, Rule, SchemeRules
+from tests.sample_schemes import SAMPLE_TEST_SCHEMES
 
 client = TestClient(app)
 SRC = "SAMPLE-TEST-ONLY"
@@ -192,26 +193,10 @@ def test_e11_engine_works_with_network_disabled(monkeypatch):
 
 # ----- API: /eligibility/check -----
 
-def test_api_returns_results_marked_as_sample_data():
-    response = client.post("/eligibility/check", json={"age": 30, "state": "Karnataka",
-                                                       "annual_family_income": 200_000})
-    assert response.status_code == 200
-    body = response.json()
-    assert body["sample_data"] is True and "not an official government service" in body["disclaimer"]
-    results = {r["scheme_id"]: r["result"] for r in body["results"]}
-    assert results == {
-        "sample-age-income-state": "eligible",
-        "sample-maternity-either-or": "need_more_info",
-        "sample-manual-check": "not_eligible",  # income 2,00,000 is above Sample C's 1,00,000 limit
-        "sample-unverified": "rules_not_verified",
-    }
-
-
-def test_api_manual_check_needs_more_info_when_other_rules_pass():
-    response = client.post("/eligibility/check", json={"annual_family_income": 50_000})
-    sample_c = next(r for r in response.json()["results"] if r["scheme_id"] == "sample-manual-check")
-    assert sample_c["result"] == "need_more_info"
-    assert sample_c["manual_checks"] == ["Family must be listed in the official beneficiary database"]
+def test_api_uses_real_data_not_samples():
+    body = client.post("/eligibility/check", json={"age": 30}).json()
+    assert body["sample_data"] is False and "not an official government service" in body["disclaimer"]
+    assert not any(r["scheme_id"].startswith("sample-") for r in body["results"])
 
 
 def test_api_empty_body_is_valid_and_never_not_eligible():

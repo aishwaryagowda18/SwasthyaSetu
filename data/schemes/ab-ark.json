@@ -1,0 +1,196 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from official Government of Karnataka pages. Needs independent human review before publishing.",
+  "scheme_id": "ab-ark",
+  "name": "Ayushman Bharat - Arogya Karnataka (AB-ArK)",
+  "level": "state",
+  "state": "Karnataka",
+  "issuing_body": "Suvarna Arogya Suraksha Trust (SAST), Department of Health and Family Welfare, Government of Karnataka",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-bims-abark",
+      "title": "Ayushman Bharat Arogya Karnataka Scheme (AB-ARK) - Bidar Institute of Medical Sciences",
+      "url": "https://bimsbidar.karnataka.gov.in/info-2/Ayushman+Bharat+Arogya+Karnataka+Scheme+(AB-ARK)/en",
+      "kind": "webpage",
+      "issuing_body": "Bidar Institute of Medical Sciences (Government of Karnataka)",
+      "document_date": null,
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Government medical institute page, not the scheme authority's own page (the SAST site at arogya.karnataka.gov.in timed out). Downloaded through Windows because the site's certificate chain fails Python's check."
+    },
+    {
+      "id": "src-igich-schemes",
+      "title": "Schemes - Indira Gandhi Institute of Child Health",
+      "url": "https://igich.karnataka.gov.in/info-2/SCHEMES/en",
+      "kind": "webpage",
+      "issuing_body": "Indira Gandhi Institute of Child Health (Government of Karnataka)",
+      "document_date": null,
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Government hospital page listing documents for AB-ArK patients. Downloaded through Windows (certificate chain)."
+    }
+  ],
+  "rules": {
+    "scheme_id": "ab-ark",
+    "name": "Ayushman Bharat - Arogya Karnataka (AB-ArK)",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "eligibility",
+        "mode": "all",
+        "rules": [
+          {
+            "field": "state",
+            "operator": "in",
+            "value": ["Karnataka"],
+            "message": "Resident of Karnataka",
+            "source_id": "src-bims-abark",
+            "section": "Ayushman Bharat - Arogya Karnataka Scheme (introduction)"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Full cover needs an Eligible Household (BPL) card under NFSA 2013 or RSBY enrolment; other residents get co-payment cover",
+            "source_id": "src-bims-abark",
+            "section": "Eligibility"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "Eligible Households (BPL) and RSBY beneficiaries: cover of up to ₹5,00,000 per family per year.",
+      "source_id": "src-bims-abark",
+      "section": "Eligibility"
+    },
+    {
+      "text": "Other residents (not Eligible Households): the scheme pays 30% of the package rate, up to ₹1.5 lakh per family per year; the patient pays the remaining 70%.",
+      "source_id": "src-bims-abark",
+      "section": "Eligibility",
+      "supporting_source_ids": ["src-igich-schemes"]
+    },
+    {
+      "text": "Covers simple secondary, complex secondary, tertiary and emergency procedures.",
+      "source_id": "src-bims-abark",
+      "section": "Benefit packages"
+    }
+  ],
+  "required_documents": [
+    {
+      "name": "Aadhaar card",
+      "source_id": "src-bims-abark",
+      "section": "How to avail the scheme"
+    },
+    {
+      "name": "Food (ration) card - BPL or APL card",
+      "source_id": "src-bims-abark",
+      "section": "How to avail the scheme"
+    },
+    {
+      "name": "For children: child's birth certificate and parents' Aadhaar cards",
+      "source_id": "src-igich-schemes",
+      "section": "Ayushman Bharath Arogya Karnataka Yojana"
+    }
+  ],
+  "how_to_apply": [
+    {
+      "text": "Go to the nearest Public Health Institution (PHI) with Aadhaar and ration card, enrol and get the AB-ArK card.",
+      "source_id": "src-bims-abark",
+      "section": "How to avail the scheme"
+    },
+    {
+      "text": "Get diagnosed at the PHI. If the PHI cannot treat the illness, it gives a referral letter for treatment at any empanelled government or private hospital.",
+      "source_id": "src-bims-abark",
+      "section": "How to avail the scheme"
+    },
+    {
+      "text": "In an emergency, go directly to any empanelled hospital without a referral.",
+      "source_id": "src-bims-abark",
+      "section": "How to avail the scheme"
+    },
+    {
+      "text": "The AB-ArK card costs ₹10 (paper) or ₹35 (plastic).",
+      "source_id": "src-bims-abark",
+      "section": "AB-ArK Card"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "All residents of Karnataka; integrated with Ayushman Bharat",
+      "source_id": "src-bims-abark", "section": "Introduction",
+      "quote": "was introduced by Government of Karnataka on 2.3.2018, with the goal of providing Universal Health Coverage to all residents of the State."
+    },
+    {
+      "claim": "Rs 5 lakh for Eligible Households and RSBY",
+      "source_id": "src-bims-abark", "section": "Eligibility",
+      "quote": "Basic Sum Assured is Rs. 5,00,000/- per Family, per annum for \"Eligible Households (BPL)\" and RSBY enrolled beneficiaries."
+    },
+    {
+      "claim": "Co-payment for others",
+      "source_id": "src-bims-abark", "section": "Eligibility",
+      "quote": "For those that do not come under the \"Eligible Household\" as defined under the NFSA 2013 or are not enrolled RSBY beneficiaries, the sum assured is 30% of the package rate up to Rs.1.5 lakh per family per annum on co-payment basis."
+    },
+    {
+      "claim": "Procedures covered",
+      "source_id": "src-bims-abark", "section": "Benefit packages",
+      "quote": "The integrated scheme covers Simple Secondary, Complex Secondary, Tertiary & Emergency Procedures."
+    },
+    {
+      "claim": "Card fee",
+      "source_id": "src-bims-abark", "section": "AB-ArK Card",
+      "quote": "on payment of a fee of Rs.10/- in A-4 size paper"
+    },
+    {
+      "claim": "Plastic card fee",
+      "source_id": "src-bims-abark", "section": "AB-ArK Card",
+      "quote": "plastic card at a cost of Rs.35/-"
+    },
+    {
+      "claim": "How to avail; documents",
+      "source_id": "src-bims-abark", "section": "How to avail the scheme",
+      "quote": "Patients should first go to the nearest Public Health Institutions (PHIs) with their Adhaar Card and Food Card."
+    },
+    {
+      "claim": "Referral",
+      "source_id": "src-bims-abark", "section": "How to avail the scheme",
+      "quote": "the patient will be given a referral letter and he will be able to get treatment in any private or government empanelled hospitals of his choice."
+    },
+    {
+      "claim": "Emergency",
+      "source_id": "src-bims-abark", "section": "How to avail the scheme",
+      "quote": "In case of emergency treatments patient can go directly to any government and private empanelled hospitals without referral."
+    },
+    {
+      "claim": "APL pays 70%",
+      "source_id": "src-igich-schemes", "section": "Ayushman Bharath Arogya Karnataka Yojana",
+      "quote": "ONLY BPL CARD FAMILIES ARE PROVIDED WITH FREE TREATMENT APL CARD HOLDERS NEED TO PAY 70% OF THE HOSPITAL BILLS"
+    },
+    {
+      "claim": "Documents for children",
+      "source_id": "src-igich-schemes", "section": "Ayushman Bharath Arogya Karnataka Yojana",
+      "quote": "BPL CARD / APL CARD / CHILD BIRTH CERTIFICATE / MOTHER AND FATHER AADHAR CARD"
+    }
+  ],
+  "flags": [
+    {
+      "type": "unconfirmed",
+      "detail": "Both sources are Government of Karnataka medical institute pages, not the scheme authority's (SAST) own page, which could not be reached. Undated; amounts may have changed since the scheme began in 2018. Confirm with SAST before review."
+    },
+    {
+      "type": "unconfirmed",
+      "detail": "Wording differs slightly: one page says the scheme pays 30% of the package rate (up to Rs 1.5 lakh); the other says APL card holders pay 70% of the hospital bills. These appear consistent but use different bases (package rate vs hospital bill)."
+    }
+  ],
+  "notes": [
+    "BPL/APL card status is not asked in the questionnaire, so the level of cover is a manual check."
+  ]
+}

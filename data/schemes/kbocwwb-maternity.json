@@ -1,0 +1,121 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from the official Board page. Needs independent human review before publishing.",
+  "scheme_id": "kbocwwb-maternity",
+  "name": "Maternity Benefit for Registered Women Construction Workers (Karnataka BOCW Welfare Board)",
+  "level": "state",
+  "state": "Karnataka",
+  "issuing_body": "Karnataka Building and Other Construction Workers Welfare Board, Labour Department, Government of Karnataka",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-kbocwwb-maternity",
+      "title": "Maternity Benefit - Karnataka Building And Other Construction Workers Welfare Board",
+      "url": "https://karbwwb.karnataka.gov.in/info-2/Maternity+Benefit/en",
+      "kind": "webpage",
+      "issuing_body": "Karnataka Building and Other Construction Workers Welfare Board",
+      "document_date": null,
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Board's own scheme page (Rule 43)."
+    }
+  ],
+  "rules": {
+    "scheme_id": "kbocwwb-maternity",
+    "name": "Maternity Benefit for Registered Women Construction Workers (Karnataka BOCW Welfare Board)",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "eligibility",
+        "mode": "all",
+        "rules": [
+          {
+            "field": "gender",
+            "operator": "eq",
+            "value": "female",
+            "message": "Women construction workers only",
+            "source_id": "src-kbocwwb-maternity",
+            "section": "Rule 43 (1)"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Must be a construction worker registered with the Karnataka Building and Other Construction Workers Welfare Board",
+            "source_id": "src-kbocwwb-maternity",
+            "section": "Rule 43 (1)"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Only for the first two deliveries; not available if she already has two living children",
+            "source_id": "src-kbocwwb-maternity",
+            "section": "Rule 43 (2)"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "₹50,000 per delivery (for a male or female child), for the first two deliveries only.",
+      "source_id": "src-kbocwwb-maternity",
+      "section": "Rule 43 (1)"
+    }
+  ],
+  "required_documents": [
+    {"name": "Proof of identity / Board smart card (attested)", "source_id": "src-kbocwwb-maternity", "section": "Supporting Document"},
+    {"name": "Employment certificate", "source_id": "src-kbocwwb-maternity", "section": "Supporting Document"},
+    {"name": "Proof of bank account", "source_id": "src-kbocwwb-maternity", "section": "Supporting Document"},
+    {"name": "Birth certificate of the child, or delivery certificate from a hospital in Karnataka signed by the doctor", "source_id": "src-kbocwwb-maternity", "section": "Rule 43 (2); Supporting Document"},
+    {"name": "Discharge summary and photo of the child", "source_id": "src-kbocwwb-maternity", "section": "Supporting Document"},
+    {"name": "For a second delivery: affidavit stating the claim is for the second delivery", "source_id": "src-kbocwwb-maternity", "section": "Rule 43 (2); Supporting Document"}
+  ],
+  "how_to_apply": [
+    {
+      "text": "Submit the application to the Board; it is verified by a Senior/Labour Inspector and approved by the Labour Officer.",
+      "source_id": "src-kbocwwb-maternity",
+      "section": "Procedure for applying"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Amount and first two deliveries",
+      "source_id": "src-kbocwwb-maternity", "section": "Rule 43 (1)",
+      "quote": "on an application from a registered woman construction worker sanction Rs.50,000/-[for a Male/Female child], only for first two deliveries"
+    },
+    {
+      "claim": "Not if two living children; second-claim affidavit",
+      "source_id": "src-kbocwwb-maternity", "section": "Rule 43 (2)",
+      "quote": "The registered woman construction worker shall not be given this assistance if she already has two living children."
+    },
+    {
+      "claim": "Birth or delivery certificate",
+      "source_id": "src-kbocwwb-maternity", "section": "Rule 43 (2)",
+      "quote": "certificate of delivery in a government or private hospital in the state of Karnataka duly signed by the doctor concerned"
+    },
+    {
+      "claim": "Supporting documents",
+      "source_id": "src-kbocwwb-maternity", "section": "Supporting Document",
+      "quote": "Proof of Identity/Smart card issued by the Board(Attested) • Affidavit for second child • Proof of Bank Account • Photo of Child • Employment Certificate • Discharge Summary • Birth Certificate of Child"
+    },
+    {
+      "claim": "Procedure",
+      "source_id": "src-kbocwwb-maternity", "section": "Procedure for applying",
+      "quote": "Application processing and Verification by Senior/ Labour Inspector. 3. Review and Approval by Labour Officer"
+    }
+  ],
+  "flags": [
+    {
+      "type": "unconfirmed",
+      "detail": "A Labour Department listing seen in search results gave older amounts (Rs 30,000 for a girl, Rs 20,000 for a boy). That page could not be retrieved (domain did not resolve). The Board's own page says Rs 50,000; reviewer should confirm the current notification."
+    }
+  ],
+  "notes": [
+    "Registration with the Board is not asked in the questionnaire, so it is a manual check; the occupation answer is not used because the registration, not the answer, decides eligibility."
+  ]
+}

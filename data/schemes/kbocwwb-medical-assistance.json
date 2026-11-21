@@ -1,0 +1,123 @@
+{
+  "_status": "UNVERIFIED DRAFT. Prepared by an AI assistant from the official Board page. Needs independent human review before publishing.",
+  "scheme_id": "kbocwwb-medical-assistance",
+  "name": "Medical Assistance - Karmika Arogya Bhagya (Karnataka BOCW Welfare Board)",
+  "level": "state",
+  "state": "Karnataka",
+  "issuing_body": "Karnataka Building and Other Construction Workers Welfare Board, Labour Department, Government of Karnataka",
+  "verification": {
+    "status": "draft",
+    "prepared_by": "AI assistant (Claude)",
+    "prepared_at": "2026-11-21",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "sources": [
+    {
+      "id": "src-kbocwwb-medical",
+      "title": "Medical Assistance (Karmika Arogya Bhagya) - Karnataka Building And Other Construction Workers Welfare Board",
+      "url": "https://karbwwb.karnataka.gov.in/info-2/Medical+Assistance(Karmika+Arogya+Bhagya)/en",
+      "kind": "webpage",
+      "issuing_body": "Karnataka Building and Other Construction Workers Welfare Board",
+      "document_date": null,
+      "checked_at": "2026-11-21",
+      "content_hash": null,
+      "retrieved_by_system": true,
+      "notes": "Board's own scheme page (Rule 46). Amount per Govt of Karnataka Notification No. LD 458 LET 2021 dated 08-08-2022."
+    }
+  ],
+  "rules": {
+    "scheme_id": "kbocwwb-medical-assistance",
+    "name": "Medical Assistance - Karmika Arogya Bhagya (Karnataka BOCW Welfare Board)",
+    "version": 1,
+    "verified": false,
+    "groups": [
+      {
+        "key": "eligibility",
+        "mode": "all",
+        "rules": [
+          {
+            "operator": "manual_check",
+            "message": "Registered construction worker with the Karnataka BOCW Welfare Board, or a dependant of one",
+            "source_id": "src-kbocwwb-medical",
+            "section": "Rule 46"
+          },
+          {
+            "operator": "manual_check",
+            "message": "Hospitalised for at least 48 hours continuously in a Government hospital, a Schedule I private hospital, or a hospital recognised under a State Government insurance scheme",
+            "source_id": "src-kbocwwb-medical",
+            "section": "Rule 46"
+          }
+        ]
+      }
+    ]
+  },
+  "benefits": [
+    {
+      "text": "₹300 per day of hospitalisation, up to a maximum of ₹20,000, subject to actual costs.",
+      "source_id": "src-kbocwwb-medical",
+      "section": "Rule 46"
+    }
+  ],
+  "required_documents": [
+    {"name": "Proof of identity / Board smart card (attested)", "source_id": "src-kbocwwb-medical", "section": "Supporting Document"},
+    {"name": "Employment certificate", "source_id": "src-kbocwwb-medical", "section": "Supporting Document"},
+    {"name": "Proof of bank account", "source_id": "src-kbocwwb-medical", "section": "Supporting Document"},
+    {"name": "Hospital bills showing admission and discharge dates and all treatment given", "source_id": "src-kbocwwb-medical", "section": "Supporting Document"},
+    {"name": "Medical documents on the hospitalisation", "source_id": "src-kbocwwb-medical", "section": "Supporting Document"},
+    {"name": "Form XXII-A", "source_id": "src-kbocwwb-medical", "section": "Supporting Document"}
+  ],
+  "how_to_apply": [
+    {
+      "text": "Apply within 6 months of the start of hospitalisation, through the Board's (KB&OWWB) software.",
+      "source_id": "src-kbocwwb-medical",
+      "section": "Supporting Document"
+    },
+    {
+      "text": "The application is verified by a Senior/Labour Inspector and approved by the Labour Officer.",
+      "source_id": "src-kbocwwb-medical",
+      "section": "Procedure for applying"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Who: registered worker and dependants; which hospitals",
+      "source_id": "src-kbocwwb-medical", "section": "Rule 46",
+      "quote": "may sanction financial assistance to a registered construction worker and their dependents hospitalised in a Government hospital or a private hospital included in Schedule I"
+    },
+    {
+      "claim": "Minimum 48 hours",
+      "source_id": "src-kbocwwb-medical", "section": "Rule 46",
+      "quote": "The assistance shall be towards hospitalisation for minimum 48 Hours continuously."
+    },
+    {
+      "claim": "Amount",
+      "source_id": "src-kbocwwb-medical", "section": "Rule 46",
+      "quote": "The financial assistance shall be Rs 300/- per day of the hospitalisation to the maximum of Rs 20,000/-"
+    },
+    {
+      "claim": "State insurance hospitals",
+      "source_id": "src-kbocwwb-medical", "section": "Rule 46",
+      "quote": "or a hospital recognised under any insurance Scheme of the State Government."
+    },
+    {
+      "claim": "Documents",
+      "source_id": "src-kbocwwb-medical", "section": "Supporting Document",
+      "quote": "Bills of hospital showing admission and discharge dates and all treatment given"
+    },
+    {
+      "claim": "Form and deadline",
+      "source_id": "src-kbocwwb-medical", "section": "Supporting Document",
+      "quote": "Form XXII-A • Application can be submitted within 6 months of hospitalisation commencement date • Applicants submit the application through KB&OWWB software"
+    },
+    {
+      "claim": "Procedure",
+      "source_id": "src-kbocwwb-medical", "section": "Procedure for applying",
+      "quote": "Application processing and Verification by Senior/ Labour Inspector. 3. Review and Approval by Labour Officer"
+    }
+  ],
+  "flags": [],
+  "notes": [
+    "Board registration and hospital stay cannot be answered by the questionnaire, so both are manual checks."
+  ]
+}

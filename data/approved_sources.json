@@ -32,6 +32,30 @@
       "proposed_at": "2026-11-21",
       "approved_by": "Aishwarya A",
       "approved_at": "2026-11-21"
+    },
+    {
+      "domain": "karbwwb.karnataka.gov.in",
+      "issuing_body": "Karnataka Building and Other Construction Workers Welfare Board",
+      "status": "approved",
+      "proposed_at": "2026-11-21",
+      "approved_by": "Aishwarya A",
+      "approved_at": "2026-11-21"
+    },
+    {
+      "domain": "bimsbidar.karnataka.gov.in",
+      "issuing_body": "Bidar Institute of Medical Sciences, Government of Karnataka (government institute page, not the scheme authority)",
+      "status": "proposed",
+      "proposed_at": "2026-11-21",
+      "approved_by": null,
+      "approved_at": null
+    },
+    {
+      "domain": "igich.karnataka.gov.in",
+      "issuing_body": "Indira Gandhi Institute of Child Health, Government of Karnataka (government hospital page, not the scheme authority)",
+      "status": "proposed",
+      "proposed_at": "2026-11-21",
+      "approved_by": null,
+      "approved_at": null
     }
   ]
 }

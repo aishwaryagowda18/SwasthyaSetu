@@ -3,10 +3,19 @@
 Run locally:  .venv\\Scripts\\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 from app.eligibility import check_eligibility
-from app.models import EligibilityResponse, Profile, SchemeRules
+from app.models import (
+    CitedItem,
+    EligibilityResponse,
+    Profile,
+    SchemeDetail,
+    SchemeList,
+    SchemeSummary,
+    SourceRef,
+)
+from app.schemes import published_records, published_rules
 
 APP_VERSION = "0.1.0"
 SERVICE_NAME = "schemesaathi-api"
@@ -14,64 +23,6 @@ DISCLAIMER = (
     "This is not an official government service. Results are guidance only; "
     "always confirm eligibility on the official scheme portal before applying."
 )
-
-# ---------------------------------------------------------------------------
-# SAMPLE TEST RULES ONLY - NOT REAL SCHEMES, NOT OFFICIAL DATA.
-# They exist only to demonstrate and test the engine. Verified official schemes
-# replace them in Step 4. Every response says "sample_data": true while these are used.
-# ---------------------------------------------------------------------------
-_SAMPLE_SOURCE = "SAMPLE-TEST-ONLY"
-SAMPLE_TEST_SCHEMES = [
-    SchemeRules(
-        scheme_id="sample-age-income-state", name="SAMPLE A - age, income and state (test only)",
-        version=1, verified=True,
-        groups=[{"key": "basic", "mode": "all", "rules": [
-            {"field": "age", "operator": "gte", "value": 18, "message": "Age 18 or above",
-             "source_id": _SAMPLE_SOURCE, "section": "Sample A"},
-            {"field": "age", "operator": "lte", "value": 60, "message": "Age 60 or below",
-             "source_id": _SAMPLE_SOURCE, "section": "Sample A"},
-            {"field": "annual_family_income", "operator": "lte", "value": 250000,
-             "message": "Family income up to 2,50,000 rupees per year",
-             "source_id": _SAMPLE_SOURCE, "section": "Sample A"},
-            {"field": "state", "operator": "in", "value": ["Karnataka"],
-             "message": "Resident of Karnataka", "source_id": _SAMPLE_SOURCE, "section": "Sample A"},
-        ]}],
-    ),
-    SchemeRules(
-        scheme_id="sample-maternity-either-or", name="SAMPLE B - either/or and sensitive field (test only)",
-        version=1, verified=True,
-        groups=[
-            {"key": "who", "mode": "all", "rules": [
-                {"field": "gender", "operator": "eq", "value": "female", "message": "Women only",
-                 "source_id": _SAMPLE_SOURCE, "section": "Sample B"},
-                {"field": "is_pregnant_or_lactating", "operator": "is_true",
-                 "message": "Pregnant or breastfeeding", "source_id": _SAMPLE_SOURCE, "section": "Sample B"},
-            ]},
-            {"key": "income_or_category", "mode": "any", "rules": [
-                {"field": "annual_family_income", "operator": "lte", "value": 800000,
-                 "message": "Family income up to 8,00,000 rupees per year",
-                 "source_id": _SAMPLE_SOURCE, "section": "Sample B"},
-                {"field": "social_category", "operator": "in", "value": ["sc", "st"],
-                 "message": "SC or ST category", "source_id": _SAMPLE_SOURCE, "section": "Sample B"},
-            ]},
-        ],
-    ),
-    SchemeRules(
-        scheme_id="sample-manual-check", name="SAMPLE C - needs an official check (test only)",
-        version=1, verified=True,
-        groups=[{"key": "basic", "mode": "all", "rules": [
-            {"field": "annual_family_income", "operator": "lte", "value": 100000,
-             "message": "Family income up to 1,00,000 rupees per year",
-             "source_id": _SAMPLE_SOURCE, "section": "Sample C"},
-            {"operator": "manual_check", "message": "Family must be listed in the official beneficiary database",
-             "source_id": _SAMPLE_SOURCE, "section": "Sample C"},
-        ]}],
-    ),
-    SchemeRules(
-        scheme_id="sample-unverified", name="SAMPLE D - rules not verified yet (test only)",
-        version=1, verified=False,
-    ),
-]
 
 app = FastAPI(
     title="SchemeSaathi API",
@@ -92,9 +43,54 @@ def health() -> dict[str, str]:
 
 @app.post("/eligibility/check", tags=["eligibility"])
 def eligibility_check(profile: Profile) -> EligibilityResponse:
-    """Check answers against each scheme's rules. Answers are not stored or logged."""
+    """Check answers against each published scheme's rules. Answers are not stored or logged."""
     return EligibilityResponse(
         disclaimer=DISCLAIMER,
-        sample_data=True,
-        results=check_eligibility(profile, SAMPLE_TEST_SCHEMES),
+        sample_data=False,
+        results=check_eligibility(profile, published_rules()),
+    )
+
+
+def _summary(rec: dict) -> dict:
+    return {
+        "scheme_id": rec["scheme_id"],
+        "name": rec["name"],
+        "level": rec.get("level", ""),
+        "state": rec.get("state"),
+        "issuing_body": rec.get("issuing_body", ""),
+        "last_checked": min(s["checked_at"] for s in rec["sources"]),
+    }
+
+
+def _cited(items: list[dict], text_key: str = "text") -> list[CitedItem]:
+    return [CitedItem(text=i[text_key], source_id=i["source_id"], page=i.get("page"),
+                      section=i.get("section")) for i in items]
+
+
+@app.get("/schemes", tags=["schemes"])
+def list_schemes() -> SchemeList:
+    """Published, human-reviewed schemes only. Drafts are never listed."""
+    return SchemeList(disclaimer=DISCLAIMER,
+                      schemes=[SchemeSummary(**_summary(r)) for r in published_records()])
+
+
+@app.get("/schemes/{scheme_id}", tags=["schemes"])
+def get_scheme(scheme_id: str) -> SchemeDetail:
+    """Details of one published scheme, with official sources for every item."""
+    rec = next((r for r in published_records() if r["scheme_id"] == scheme_id), None)
+    if rec is None:
+        raise HTTPException(status_code=404, detail="Scheme not found")
+    rules = [r for g in rec["rules"]["groups"] for r in g["rules"]]
+    return SchemeDetail(
+        **_summary(rec),
+        eligibility=_cited(rules, "message"),
+        benefits=_cited(rec.get("benefits", [])),
+        historical_benefits=_cited(rec.get("historical_benefits", [])),
+        required_documents=_cited(rec.get("required_documents", []), "name"),
+        how_to_apply=_cited(rec.get("how_to_apply", [])),
+        notices=[f["detail"] for f in rec.get("flags", []) if f.get("type") == "unconfirmed"],
+        sources=[SourceRef(id=s["id"], title=s["title"], url=s["url"], checked_at=s["checked_at"])
+                 for s in rec["sources"]],
+        human_reviewed=True,
+        disclaimer=DISCLAIMER,
     )

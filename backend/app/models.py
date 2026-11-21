@@ -154,5 +154,47 @@ class SchemeCheckResult(BaseModel):
 
 class EligibilityResponse(BaseModel):
     disclaimer: str
-    sample_data: bool  # true while only test rules are loaded
+    sample_data: bool  # true only if test rules are loaded
     results: list[SchemeCheckResult]
+
+
+# ----- Scheme information (GET /schemes) -----
+
+class SourceRef(BaseModel):
+    id: str
+    title: str
+    url: str
+    checked_at: str
+
+
+class CitedItem(BaseModel):
+    text: str
+    source_id: str
+    page: int | None = None
+    section: str | None = None
+
+
+class SchemeSummary(BaseModel):
+    scheme_id: str
+    name: str
+    level: str
+    state: str | None
+    issuing_body: str
+    last_checked: str  # oldest source check date
+
+
+class SchemeDetail(SchemeSummary):
+    eligibility: list[CitedItem]  # plain-language conditions, including official manual checks
+    benefits: list[CitedItem]
+    historical_benefits: list[CitedItem]
+    required_documents: list[CitedItem]
+    how_to_apply: list[CitedItem]
+    notices: list[str]  # details still awaiting official confirmation
+    sources: list[SourceRef]
+    human_reviewed: bool
+    disclaimer: str
+
+
+class SchemeList(BaseModel):
+    disclaimer: str
+    schemes: list[SchemeSummary]
