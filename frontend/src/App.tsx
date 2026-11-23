@@ -5,17 +5,32 @@ import Questionnaire from "./pages/Questionnaire";
 import Results from "./pages/Results";
 import SchemeDetail from "./pages/SchemeDetail";
 import NotFound from "./pages/NotFound";
+import { AdminSessionProvider } from "./admin/session";
+import AdminLayout from "./admin/AdminLayout";
+import AdminLogin from "./admin/AdminLogin";
+import AdminDashboard from "./admin/AdminDashboard";
+import AdminScheme from "./admin/AdminScheme";
+import { AdminAudit, AdminSources } from "./admin/AdminSources";
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/questionnaire" element={<Questionnaire />} />
-        <Route path="/results" element={<Results />} />
-        <Route path="/schemes/:schemeId" element={<SchemeDetail />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <AdminSessionProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/questionnaire" element={<Questionnaire />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/schemes/:schemeId" element={<SchemeDetail />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="schemes/:schemeId" element={<AdminScheme />} />
+            <Route path="sources" element={<AdminSources />} />
+            <Route path="audit" element={<AdminAudit />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </AdminSessionProvider>
   );
 }

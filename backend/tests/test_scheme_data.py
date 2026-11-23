@@ -32,8 +32,8 @@ def test_verification_status_matches_rules(path):
     data = load(path)
     rules = SchemeRules(**data["rules"])  # raises if any rule is badly written
     v = data["verification"]
-    assert v["status"] in ("draft", "reviewed")
-    if v["status"] == "draft":
+    assert v["status"] in ("draft", "in_review", "reviewed")
+    if v["status"] in ("draft", "in_review"):
         assert rules.verified is False and v["reviewed_by"] is None
     else:  # independent second-person review
         assert rules.verified is True

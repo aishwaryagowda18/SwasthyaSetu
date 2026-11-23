@@ -67,6 +67,7 @@ export default function Layout() {
               <li><Link className="hover:text-yellow" to="/questionnaire">Check Eligibility</Link></li>
               <li><a className="hover:text-yellow" href="https://www.myscheme.gov.in/" target="_blank" rel="noreferrer">MyScheme.gov.in</a></li>
               <li><a className="hover:text-yellow" href="https://beneficiary.nha.gov.in/" target="_blank" rel="noreferrer">Ayushman Bharat portal</a></li>
+              <li><Link className="hover:text-yellow" to="/admin/login">Admin sign in</Link></li>
             </ul>
           </div>
           <div role="note" aria-label="Disclaimer">

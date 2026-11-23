@@ -13,6 +13,11 @@ secrets/
 *.sqlite3
 *.db-journal
 
+# ===== Admin accounts and audit log (local only) =====
+admin_users.json
+admin_audit_log.jsonl
+*.tmp
+
 # ===== Uploads, sessions, user files =====
 uploads/
 flask_session/

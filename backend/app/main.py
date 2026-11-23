@@ -5,6 +5,7 @@ Run locally:  .venv\\Scripts\\python -m uvicorn app.main:app --host 127.0.0.1 --
 
 from fastapi import FastAPI, HTTPException
 
+from app.admin import router as admin_router
 from app.eligibility import check_eligibility
 from app.models import (
     CitedItem,
@@ -33,6 +34,9 @@ app = FastAPI(
         "official scheme portal before applying."
     ),
 )
+
+
+app.include_router(admin_router)
 
 
 @app.get("/health", tags=["system"])
@@ -90,8 +94,9 @@ def get_scheme(scheme_id: str) -> SchemeDetail:
         required_documents=_cited(rec.get("required_documents", []), "name"),
         how_to_apply=_cited(rec.get("how_to_apply", [])),
         # Citizens see a plain-language note; internal reviewer wording is never shown.
-        notices=[f.get("public_note") or "Some details of this scheme are awaiting official confirmation."
-                 for f in rec.get("flags", []) if f.get("type") == "unconfirmed"],
+        notices=list(dict.fromkeys(  # de-duplicated, order kept
+            f.get("public_note") or "Some details of this scheme are awaiting official confirmation."
+            for f in rec.get("flags", []) if f.get("type") == "unconfirmed")),
         sources=[SourceRef(id=s["id"], title=s["title"], url=s["url"], checked_at=s["checked_at"])
                  for s in rec["sources"]],
         human_reviewed=True,

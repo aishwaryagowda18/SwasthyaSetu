@@ -7,7 +7,7 @@ test("discover, check eligibility, answer follow-up, view details", async ({ pag
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /Find Health Schemes/ })).toBeVisible();
   await expect(page.getByText("Ni-kshay Poshan Yojana (Nutritional Support to TB Patients)")).toBeVisible();
-  await expect(page.getByText(/Ayushman Bharat Pradhan Mantri Jan Arogya Yojana/)).toHaveCount(0);
+  await expect(page.getByText(/Pradhan Mantri Matru Vandana Yojana/)).toHaveCount(0); // a draft
   await expect(page.getByText(/not an official government service/i)).toBeVisible();
   await expect(page.getByText(/sponsored|ad space/i)).toHaveCount(0);
   await expect(page.getByText(/% match/i)).toHaveCount(0);
@@ -37,14 +37,16 @@ test("discover, check eligibility, answer follow-up, view details", async ({ pag
 
   // 3. Results: TB question appears only because a scheme needs it.
   await expect(page.getByRole("heading", { name: "Your Results" })).toBeVisible();
-  await expect(page.getByText("Needs more information")).toBeVisible();
+  // Other schemes may also be published in the test data; check the Nikshay card itself.
+  const npyResult = page.getByRole("article", { name: /Ni-kshay/ });
+  await expect(npyResult.getByText("Needs more information")).toBeVisible();
   await expect(page.getByText(/diagnosed you with tuberculosis/i)).toBeVisible();
   await expect(page.getByText(/never stored/i)).toBeVisible();
   await page.screenshot({ path: "test-results/03-results-followup.png", fullPage: true });
 
   // 4. Answer the follow-up: result now lists the official checks to complete.
   await page.getByRole("button", { name: "Yes" }).click();
-  await expect(page.getByText(/registered on the NIKSHAY portal/)).toBeVisible();
+  await expect(npyResult.getByText(/registered on the NIKSHAY portal/)).toBeVisible();
   await expect(page.getByText(/diagnosed you with tuberculosis/i)).toHaveCount(0);
   await expect(page.getByRole("tab", { name: "Central" })).toBeVisible();
   await page.getByRole("tab", { name: "Karnataka State" }).click();
@@ -54,7 +56,7 @@ test("discover, check eligibility, answer follow-up, view details", async ({ pag
   await page.screenshot({ path: "test-results/04-results-answered.png", fullPage: true });
 
   // 5. Scheme details with official sources.
-  await page.getByRole("link", { name: /Benefits, documents and how to apply/ }).click();
+  await npyResult.getByRole("link", { name: /Benefits, documents and how to apply/ }).click();
   await expect(page.getByRole("heading", { name: /Ni-kshay Poshan Yojana/ })).toBeVisible();
   await expect(page.getByText(/Rs 1,000 per month/)).toBeVisible();
   await expect(page.getByText(/Rs 500 per month/)).toBeVisible();
@@ -68,7 +70,7 @@ test("discover, check eligibility, answer follow-up, view details", async ({ pag
 });
 
 test("a draft scheme is not available", async ({ page }) => {
-  await page.goto("/schemes/ab-pmjay");
+  await page.goto("/schemes/pmmvy"); // a draft that no test publishes
   await expect(page.getByRole("alert")).toContainText(/not available/i);
 });
 

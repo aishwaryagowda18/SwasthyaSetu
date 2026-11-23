@@ -30,7 +30,25 @@ These rules apply to all code, data and contributors in this project.
 ## Admin access
 
 - Admin features require login with a role check performed on the server.
-- Admin changes are recorded in an audit log.
+- Independent second-person review is enforced by the server before a scheme is published.
+- Admin actions are recorded in an audit log, including failed logins, lockouts, forbidden
+  attempts and blocked actions. Passwords and tokens are never logged.
+- Admin accounts (`backend/admin_users.json`) and the audit log (`backend/admin_audit_log.jsonl`)
+  are local files and are never committed to git.
+
+## TODO before production deployment (known limitations)
+
+The current admin panel is designed for local use. Resolve these before any public deployment:
+
+1. **Sessions and lockout counters are in memory.** A backend restart signs everyone out and
+   resets lockout counters. Store sessions and failed-login counters persistently (e.g. Supabase).
+2. **Lockout is per username only.** An attacker can deliberately lock out a real admin, and trying
+   many usernames is not limited per IP. Add per-IP rate limiting on `/admin/login` (test plan P8).
+3. **The session token is held in browser memory and sent as a Bearer header.** Script injection
+   (XSS) on the page could read it while signed in. Serve only over HTTPS, add a strict
+   Content-Security-Policy header, or move to HttpOnly + Secure + SameSite cookies with CSRF protection.
+4. **Unauthenticated requests to admin endpoints are not audited** (to avoid log flooding).
+   Failed logins are audited. Consider rate-limited logging of repeated 401s.
 
 ## Reporting a problem
 
