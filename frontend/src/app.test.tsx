@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 import { toProfile } from "./pages/Questionnaire";
+import type { Answers } from "./answers";
 
 // Fake API responses (test data only).
 const SCHEME = {
@@ -45,10 +46,11 @@ function mockApi(eligibility: (body: Record<string, unknown>) => object | object
   });
 }
 
-function renderAt(path: string, state?: object) {
+// Answers are held in app memory (not router history), so tests pass them to the app directly.
+function renderAt(path: string, answers?: Partial<Answers>) {
   return render(
-    <MemoryRouter initialEntries={[state ? { pathname: path, state } : path]}>
-      <App />
+    <MemoryRouter initialEntries={[path]}>
+      <App initialAnswers={answers} />
     </MemoryRouter>,
   );
 }

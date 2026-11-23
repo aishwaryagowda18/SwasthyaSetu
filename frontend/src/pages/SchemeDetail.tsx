@@ -3,11 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { AlertTriangle, ArrowLeft, ExternalLink, ShieldCheck } from "lucide-react";
 import { api, ApiError, type CitedItem, type SchemeDetail as Detail } from "../api";
 import { ApplyLink, Citation, ErrorBox, Loading } from "../components/ui";
+import DocumentChecklist from "../components/DocumentChecklist";
 
 function Section({ title, items, empty }: { title: string; items: CitedItem[]; empty?: string }) {
   if (items.length === 0 && !empty) return null;
   return (
-    <section className="card card-soft p-7 md:p-8">
+    <section className="card card-soft p-7 md:p-8 print:hidden">
       <h2 className="text-xl font-bold text-navy"><span className="highlight">{title}</span></h2>
       {items.length === 0 ? (
         <p className="mt-2 text-sm text-muted-foreground">{empty}</p>
@@ -34,7 +35,7 @@ export default function SchemeDetail() {
   return (
     <div className="px-4 py-12">
       <div className="container-tight max-w-3xl space-y-5">
-        <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground print:hidden">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" /> All schemes
         </Link>
         {error === "notfound" && (
@@ -44,7 +45,7 @@ export default function SchemeDetail() {
         {!error && !scheme && <Loading />}
         {scheme && (
           <>
-            <header>
+            <header className="print:hidden">
               <div className="flex flex-wrap gap-2 text-xs">
                 <span className="badge capitalize">{scheme.level}</span>
                 {scheme.state && <span className="badge badge-no">{scheme.state}</span>}
@@ -59,7 +60,7 @@ export default function SchemeDetail() {
             </header>
 
             {scheme.notices.length > 0 && (
-              <section className="card card-sm card-accent p-5 flex gap-3" role="note" aria-label="Details awaiting confirmation">
+              <section className="card card-sm card-accent p-5 flex gap-3 print:hidden" role="note" aria-label="Details awaiting confirmation">
                 <AlertTriangle className="h-5 w-5 shrink-0" aria-hidden="true" />
                 <div className="text-sm">
                   <p className="font-medium">Some details are awaiting official confirmation</p>
@@ -70,11 +71,19 @@ export default function SchemeDetail() {
 
             <Section title="Who can apply" items={scheme.eligibility} />
             <Section title="Benefits" items={scheme.benefits} />
-            <Section title="Documents needed" items={scheme.required_documents} empty="Not yet confirmed from an official source. Ask the scheme office." />
+            {scheme.required_documents.length > 0 ? (
+              <DocumentChecklist
+                title="Documents needed"
+                printHeading={scheme.name}
+                items={scheme.required_documents.map((d, n) => ({ key: `${n}`, name: d.text, sources: [{ page: d.page, section: d.section }] }))}
+              />
+            ) : (
+              <Section title="Documents needed" items={[]} empty="Not yet confirmed from an official source. Ask the scheme office." />
+            )}
             <Section title="How to apply" items={scheme.how_to_apply} empty="Not yet confirmed from an official source. Ask the scheme office." />
             {scheme.historical_benefits.length > 0 && <Section title="Earlier amounts (no longer current)" items={scheme.historical_benefits} />}
 
-            <section className="card card-navy p-7 md:p-8">
+            <section className="card card-navy p-7 md:p-8 print:hidden">
               <h2 className="text-2xl font-medium"><span className="highlight">Official sources</span></h2>
               <ul className="mt-2 space-y-2 text-sm">
                 {scheme.sources.map((s) => (

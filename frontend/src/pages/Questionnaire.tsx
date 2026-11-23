@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Profile } from "../api";
+import { useAnswers } from "../answers";
 import { AREAS, CATEGORIES, GENDERS, OCCUPATIONS, STATES } from "../options";
 import { Button } from "../components/ui";
 
@@ -46,6 +47,7 @@ function Select({ value, onChange, options, label }: { value: string; onChange: 
 
 export default function Questionnaire() {
   const navigate = useNavigate();
+  const { setProfile } = useAnswers();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(EMPTY);
   const set = (key: keyof Form) => (value: string) => setForm((f) => ({ ...f, [key]: value }));
@@ -56,7 +58,10 @@ export default function Questionnaire() {
 
   const next = () => {
     if (step < STEPS.length - 1) setStep(step + 1);
-    else navigate("/results", { state: { profile: toProfile(form) } }); // kept in memory only
+    else {
+      setProfile(toProfile(form)); // app memory only, not the tab history
+      navigate("/results");
+    }
   };
 
   return (

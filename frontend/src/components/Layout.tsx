@@ -24,7 +24,7 @@ export default function Layout() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:p-2 focus:bg-yellow">
         Skip to content
       </a>
-      <header className="sticky top-0 z-40 bg-navy text-white">
+      <header className="sticky top-0 z-40 bg-navy text-white print:hidden">
         <nav className="container-tight px-4 md:px-6 h-18 py-4 flex items-center justify-between" aria-label="Main">
           <Link to="/" aria-label="SchemeSathi home"><Logo /></Link>
           <button className="md:hidden p-2" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
@@ -51,7 +51,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="band-navy mt-20">
+      <footer className="band-navy mt-20 print:hidden">
         <div className="container-tight px-4 md:px-6 py-14 grid gap-10 md:grid-cols-3 text-sm">
           <div>
             <Logo />

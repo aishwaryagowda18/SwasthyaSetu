@@ -140,3 +140,17 @@ body {
   outline-offset: 2px;
   box-shadow: 0 0 0 5px var(--color-navy);
 }
+
+/* Printing: only the checklist and disclaimer are printed, in light colours (saves ink). */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .card, .card-soft, .card-navy, .card-blue, .card-accent {
+    background: #fff !important; color: #000 !important;
+    box-shadow: none !important; border: 1px solid #bbb !important;
+  }
+  .highlight { background-image: none !important; }
+  .text-navy, .text-blue, .text-muted-foreground, .text-success { color: #000 !important; }
+  .bg-blue { background: #999 !important; }
+  [role="note"] { border: 1px solid #bbb !important; background: #fff !important; color: #000 !important; }
+  main > div { padding-top: 0 !important; }
+}

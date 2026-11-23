@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, CircleHelp, XCircle } from "lucide-react";
-import { api, type Profile, type SchemeCheckResult, type SchemeSummary } from "../api";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAnswers } from "../answers";
+import { ArrowLeft, CheckCircle2, CircleHelp, ClipboardCheck, XCircle } from "lucide-react";
+import { api, type SchemeCheckResult, type SchemeSummary } from "../api";
 import { FIELD_LABELS, FOLLOW_UP_QUESTIONS } from "../options";
 import { ApplyLink, Button, ErrorBox, LevelTabs, Loading, matchesLevel, type LevelFilter } from "../components/ui";
 
@@ -82,8 +83,9 @@ function FollowUp({ fields, onAnswer }: { fields: string[]; onAnswer: (field: st
 }
 
 export default function Results() {
-  const initial = (useLocation().state as { profile?: Profile } | null)?.profile;
-  const [profile, setProfile] = useState<Profile | undefined>(initial);
+  const navigate = useNavigate();
+  // Answers live in app memory only; a reload clears them and returns to the questionnaire.
+  const { profile, setProfile, setChecklistIds } = useAnswers();
   const [results, setResults] = useState<SchemeCheckResult[] | null>(null);
   const [disclaimer, setDisclaimer] = useState("");
   const [error, setError] = useState(false);
@@ -109,6 +111,11 @@ export default function Results() {
   const filtered = useMemo(
     () => sorted.filter((r) => level === "all" || (schemeInfo[r.scheme_id] && matchesLevel(schemeInfo[r.scheme_id], level))),
     [sorted, level, schemeInfo],
+  );
+  // Schemes worth preparing documents for: likely eligible, or needing more information.
+  const checklistIds = useMemo(
+    () => filtered.filter((r) => r.result === "eligible" || r.result === "need_more_info").map((r) => r.scheme_id),
+    [filtered],
   );
   const missing = useMemo(
     () => [...new Set(sorted.filter((r) => r.result === "need_more_info").flatMap((r) => r.missing_fields))],
@@ -140,6 +147,16 @@ export default function Results() {
             <div className="space-y-4">
               {filtered.map((r) => <ResultCard key={r.scheme_id} r={r} info={schemeInfo[r.scheme_id]} />)}
             </div>
+            {checklistIds.length > 0 && (
+              <div className="card card-navy p-6 flex flex-wrap items-center justify-between gap-4">
+                <p className="text-sm text-white/90">
+                  Get one list of the official documents for the {checklistIds.length} scheme{checklistIds.length === 1 ? "" : "s"} you may qualify for.
+                </p>
+                <button type="button" className="btn btn-accent" onClick={() => { setChecklistIds(checklistIds); navigate("/checklist"); }}>
+                  <ClipboardCheck className="h-4 w-4" aria-hidden="true" /> Build my document checklist
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
