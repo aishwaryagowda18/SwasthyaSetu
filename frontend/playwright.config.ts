@@ -26,6 +26,7 @@ export default defineConfig({
         SCHEMESAATHI_DATA_DIR: path.join(e2eDir, "data"),
         SCHEMESAATHI_ADMIN_USERS: path.join(e2eDir, "users.json"),
         SCHEMESAATHI_AUDIT_LOG: path.join(e2eDir, "audit.jsonl"),
+        SCHEMESAATHI_DISABLE_AI: "1", // never call the paid Claude API from tests
       },
     },
     {

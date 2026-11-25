@@ -1,3 +1,4 @@
 # Packages needed to RUN the backend. Exact versions for repeatable installs.
 fastapi==0.165.0
 uvicorn==0.54.0
+anthropic==2.12.0  # Claude API for the chatbot (optional at runtime: search-only without a key)

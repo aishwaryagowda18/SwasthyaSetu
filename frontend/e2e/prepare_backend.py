@@ -25,6 +25,7 @@ if OUT.exists():
 for p in (ROOT / "data" / "schemes").glob("*.json"):
     shutil.copy(p, OUT / "data" / "schemes")
 shutil.copy(ROOT / "data" / "approved_sources.json", OUT / "data")
+shutil.copytree(ROOT / "data" / "catalogue", OUT / "data" / "catalogue")  # unverified catalogue (read-only in tests)
 for username, name, role in [("e2e_editor", "E2E Editor", "editor"), ("e2e_reviewer", "E2E Reviewer", "reviewer")]:
     auth.add_user(username, name, role, TEST_PASSWORD)
 print(f"e2e backend data prepared in {OUT}")

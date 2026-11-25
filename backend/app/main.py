@@ -3,11 +3,16 @@
 Run locally:  .venv\\Scripts\\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query, Request
 
-from app.admin import router as admin_router
-from app.eligibility import check_eligibility
-from app.models import (
+from app.config import load_env
+
+load_env()  # reads backend/.env (git-ignored), e.g. ANTHROPIC_API_KEY
+
+from app import catalogue, chat  # noqa: E402
+from app.admin import router as admin_router  # noqa: E402
+from app.eligibility import check_eligibility  # noqa: E402
+from app.models import (  # noqa: E402
     CitedItem,
     EligibilityResponse,
     Profile,
@@ -16,7 +21,7 @@ from app.models import (
     SchemeSummary,
     SourceRef,
 )
-from app.schemes import load_all, official_apply_link, published_records, published_rules
+from app.schemes import load_all, official_apply_link, published_records, published_rules  # noqa: E402
 
 APP_VERSION = "0.1.0"
 SERVICE_NAME = "schemesaathi-api"
@@ -102,3 +107,52 @@ def get_scheme(scheme_id: str) -> SchemeDetail:
         human_reviewed=True,
         disclaimer=DISCLAIMER,
     )
+
+
+# ----- Unverified catalogue (never used for eligibility) -----
+
+@app.get("/catalogue", tags=["catalogue"])
+def catalogue_search(
+    q: str = Query(default="", max_length=200),
+    level: str | None = Query(default=None, pattern="^(central|state)$"),
+    state: str | None = Query(default=None, max_length=80),
+    category: str | None = Query(default=None, max_length=120),
+    page: int = Query(default=1, ge=1, le=1000),
+    page_size: int = Query(default=20, ge=1, le=50),
+) -> dict:
+    """Search ALL schemes from the unverified catalogue. Every result is marked verified=false."""
+    found = catalogue.search(q, level, state, category)
+    start = (page - 1) * page_size
+    published = {r["scheme_id"] for r in published_records()}
+    results = []
+    for _, e in found[start:start + page_size]:
+        s = catalogue.summary(e)
+        if s["reviewed_scheme_id"] not in published:  # link only to reviewed versions that are public
+            s["reviewed_scheme_id"] = None
+        results.append(s)
+    return {"warning": catalogue.WARNING, "total": len(found), "page": page, "page_size": page_size, "results": results}
+
+
+@app.get("/catalogue/facets", tags=["catalogue"])
+def catalogue_facets() -> dict:
+    return catalogue.facets()
+
+
+@app.get("/catalogue/{entry_id}", tags=["catalogue"])
+def catalogue_entry(entry_id: str) -> dict:
+    entry = catalogue.get(entry_id)
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Scheme not found")
+    published = {r["scheme_id"] for r in published_records()}
+    return {**entry, "verified": False, "warning": catalogue.WARNING,
+            "reviewed_scheme_id": entry.get("reviewed_scheme_id") if entry.get("reviewed_scheme_id") in published else None}
+
+
+# ----- Chatbot -----
+
+@app.post("/chat", tags=["chat"])
+def chat_endpoint(body: chat.ChatRequest, request: Request) -> chat.ChatResponse:
+    """Answer a question from reviewed and unverified scheme data. Messages are not stored or logged."""
+    if not chat.allow(request.client.host if request.client else "unknown"):
+        raise HTTPException(status_code=429, detail="Too many questions. Please wait a minute and try again.")
+    return chat.answer(body)

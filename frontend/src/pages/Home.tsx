@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ClipboardList, FileCheck2, HeartPulse, Lock, Pill, Search, ShieldCheck, Sparkles, Stethoscope } from "lucide-react";
 import { api, type SchemeSummary } from "../api";
 import { ErrorBox, LevelTabs, Loading, SchemeCard, SectionTitle, matchesLevel, type LevelFilter } from "../components/ui";
+import { tx, useT } from "../i18n";
 
 const STEPS = [
-  { icon: ClipboardList, title: "Answer Questions", text: "Tell us your age, state, income and a few other details. Skip anything you don't want to share." },
-  { icon: Sparkles, title: "Rule-based Matching", text: "Fixed, tested rules check each scheme. Results never come from guesswork." },
-  { icon: FileCheck2, title: "Get Results", text: "See benefits, documents needed and what still needs an official check, with sources." },
+  { icon: ClipboardList, title: tx("Answer Questions"), text: tx("Tell us your age, state, income and a few other details. Skip anything you don't want to share.") },
+  { icon: Sparkles, title: tx("Rule-based Matching"), text: tx("Fixed, tested rules check each scheme. Results never come from guesswork.") },
+  { icon: FileCheck2, title: tx("Get Results"), text: tx("See benefits, documents needed and what still needs an official check, with sources.") },
 ];
 
 const WHY = [
-  { icon: ShieldCheck, title: "Official sources only", text: "Every fact links to a government document or page, and is reviewed by a person before it is shown." },
-  { icon: Lock, title: "Private by design", text: "No sign-up. Your answers are used once to check eligibility and are never stored." },
-  { icon: FileCheck2, title: "Honest results", text: "If something can't be decided from your answers, we say so and tell you what to check." },
+  { icon: ShieldCheck, title: tx("Official sources only"), text: tx("Every fact links to a government document or page, and is reviewed by a person before it is shown.") },
+  { icon: Lock, title: tx("Private by design"), text: tx("No sign-up. Your answers are used once to check eligibility and are never stored.") },
+  { icon: FileCheck2, title: tx("Honest results"), text: tx("If something can't be decided from your answers, we say so and tell you what to check.") },
 ];
 
 function HeroArt() {
@@ -49,6 +50,7 @@ export default function Home() {
   const [error, setError] = useState(false);
   const [query, setQuery] = useState("");
   const [level, setLevel] = useState<LevelFilter>("all");
+  const { t, lang } = useT();
 
   useEffect(() => {
     api.listSchemes().then((r) => setSchemes(r.schemes)).catch(() => setError(true));
@@ -67,17 +69,16 @@ export default function Home() {
       <section className="band-navy">
         <div className="container-tight px-4 md:px-6 py-16 md:py-24 grid md:grid-cols-2 items-center gap-14">
           <div>
-            <span className="badge bg-white/15 text-white">Central &amp; Karnataka public health schemes</span>
-            <h1 className="mt-6 text-4xl md:text-5xl font-extrabold leading-tight">
-              Find Health Schemes You May Be Eligible For
+            <span className="badge bg-white/15 text-white">{t("Central & Karnataka public health schemes")}</span>
+            <h1 className={`mt-6 font-extrabold leading-tight ${lang === "kn" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>
+              {t("Find Health Schemes You May Be Eligible For")}
             </h1>
             <p className="mt-6 text-lg text-white/85 max-w-lg">
-              Answer a few simple questions and see which public health schemes may apply to you, what they offer and
-              how to apply. Free, and based on official government sources.
+              {t("Answer a few simple questions and see which public health schemes may apply to you, what they offer and how to apply. Free, and based on official government sources.")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/questionnaire" className="btn btn-primary">Check Your Eligibility <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-              <a href="#how-it-works" className="btn btn-ghost-light">How it Works</a>
+              <Link to="/questionnaire" className="btn btn-primary">{t("Check Your Eligibility")} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <a href="#how-it-works" className="btn btn-ghost-light">{t("How it Works")}</a>
             </div>
           </div>
           <HeroArt />
@@ -86,16 +87,16 @@ export default function Home() {
 
       {/* How it works */}
       <section id="how-it-works" className="container-tight px-4 md:px-6 py-20 scroll-mt-20">
-        <SectionTitle title="How SchemeSathi Works" highlight="Works">Three simple steps from questions to clear, sourced answers.</SectionTitle>
+        <SectionTitle title={t("How SchemeSathi Works")} highlight={t("Works")}>{t("Three simple steps from questions to clear, sourced answers.")}</SectionTitle>
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {STEPS.map(({ icon: Icon, title, text }, i) => (
             <div key={title} className="card card-blue p-8">
               <div className="flex items-center justify-between">
                 <Icon className="h-8 w-8 text-yellow" aria-hidden="true" />
-                <span className="text-xs font-bold tracking-wide text-yellow">STEP {i + 1}</span>
+                <span className="text-xs font-bold tracking-wide text-yellow">{t("STEP {n}", { n: i + 1 })}</span>
               </div>
-              <h3 className="mt-4 text-xl font-bold">{title}</h3>
-              <p className="mt-3 text-sm text-white/90">{text}</p>
+              <h3 className="mt-4 text-xl font-bold">{t(title)}</h3>
+              <p className="mt-3 text-sm text-white/90">{t(text)}</p>
             </div>
           ))}
         </div>
@@ -104,27 +105,27 @@ export default function Home() {
       {/* Schemes */}
       <section id="schemes" className="bg-muted scroll-mt-20" aria-labelledby="schemes-heading">
         <div className="container-tight px-4 md:px-6 py-20">
-          <SectionTitle title="Reviewed Schemes" highlight="Schemes" id="schemes-heading">
-            Only schemes checked against official sources by a person are listed.
+          <SectionTitle title={t("Reviewed Schemes")} highlight={t("Schemes")} id="schemes-heading">
+            {t("Only schemes checked against official sources by a person are listed.")}
           </SectionTitle>
           <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4">
-            <LevelTabs value={level} onChange={setLevel} label="Filter schemes by level" />
+            <LevelTabs value={level} onChange={setLevel} label={t("Filter schemes by level")} />
             <label className="relative block w-full max-w-md">
-              <span className="sr-only">Search schemes</span>
+              <span className="sr-only">{t("Search schemes")}</span>
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
-              <input type="search" placeholder="Search schemes..." value={query} onChange={(e) => setQuery(e.target.value)} className="field pl-11" />
+              <input type="search" placeholder={t("Search schemes...")} value={query} onChange={(e) => setQuery(e.target.value)} className="field pl-11" />
             </label>
           </div>
           <div className="mt-10">
-            {error && <ErrorBox>We couldn't load the scheme list right now.</ErrorBox>}
-            {!error && schemes === null && <Loading label="Loading schemes..." />}
-            {schemes !== null && shown.length === 0 && <p className="text-center text-muted-foreground">No schemes found.</p>}
+            {error && <ErrorBox>{t("We couldn't load the scheme list right now.")}</ErrorBox>}
+            {!error && schemes === null && <Loading label={t("Loading schemes...")} />}
+            {schemes !== null && shown.length === 0 && <p className="text-center text-muted-foreground">{t("No schemes found.")}</p>}
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {shown.map((s) => <SchemeCard key={s.scheme_id} scheme={s} />)}
             </div>
             {schemes !== null && (
               <p className="mt-8 text-center text-sm text-muted-foreground">
-                More central and Karnataka schemes are being checked and will appear here once reviewed.
+                {t("More central and Karnataka schemes are being checked and will appear here once reviewed.")}
               </p>
             )}
           </div>
@@ -133,13 +134,13 @@ export default function Home() {
 
       {/* Why */}
       <section className="container-tight px-4 md:px-6 py-20">
-        <SectionTitle title="Why SchemeSathi?" highlight="SchemeSathi">Built for trust: official sources, privacy and honest answers.</SectionTitle>
+        <SectionTitle title={t("Why SchemeSathi?")} highlight="SchemeSathi">{t("Built for trust: official sources, privacy and honest answers.")}</SectionTitle>
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {WHY.map(({ icon: Icon, title, text }) => (
             <div key={title} className="card card-blue p-8">
               <Icon className="h-8 w-8 text-yellow" aria-hidden="true" />
-              <h3 className="mt-4 text-xl font-bold">{title}</h3>
-              <p className="mt-3 text-sm text-white/90">{text}</p>
+              <h3 className="mt-4 text-xl font-bold">{t(title)}</h3>
+              <p className="mt-3 text-sm text-white/90">{t(text)}</p>
             </div>
           ))}
         </div>
@@ -148,9 +149,9 @@ export default function Home() {
       {/* CTA */}
       <section className="band-navy">
         <div className="container-tight px-4 md:px-6 py-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold">Ready to Find Your <span className="highlight">Schemes?</span></h2>
-          <p className="mt-4 text-white/85">It takes about 2 minutes. No registration needed.</p>
-          <Link to="/questionnaire" className="btn btn-primary mt-8">Start Now <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <h2 className="text-3xl md:text-4xl font-extrabold">{t("Ready to Find Your")} <span className="highlight">{t("Schemes?")}</span></h2>
+          <p className="mt-4 text-white/85">{t("It takes about 2 minutes. No registration needed.")}</p>
+          <Link to="/questionnaire" className="btn btn-primary mt-8">{t("Start Now")} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
         </div>
       </section>
     </>

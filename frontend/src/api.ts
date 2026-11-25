@@ -98,6 +98,49 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await response.json()) as T;
 }
 
+// ----- Unverified catalogue -----
+
+export interface CatalogueSummary {
+  id: string; name: string; level: "central" | "state"; state: string | null; category: string;
+  brief_description: string; reviewed_scheme_id: string | null; verified: false;
+}
+export interface CatalogueEntry extends CatalogueSummary {
+  tags: string[]; ministry: string; implementing_agency: string; target_beneficiaries: string;
+  detailed_description: string; eligibility_text: string; documents_text: string; benefits_text: string;
+  application_text: string; official_website: string; application_form: string; corrupted_text: boolean; warning: string;
+}
+export interface CataloguePage { warning: string; total: number; page: number; page_size: number; results: CatalogueSummary[] }
+export interface CatalogueFacets { states: string[]; categories: string[]; count: number; central: number }
+
+// ----- Chatbot -----
+
+export interface ChatTurn { role: "user" | "assistant"; content: string }
+export interface ChatSource {
+  label: string; id: string; name: string; verified: boolean; link: string; summary: string;
+  level?: string; state?: string; details?: ChatSection[];
+}
+export interface ChatSection { title: string; items: string[] }
+export interface ChatReply { answer: string; mode: "ai" | "database"; sources: ChatSource[]; disclaimer: string; redacted: boolean }
+
+export const catalogueApi = {
+  search: (params: { q?: string; level?: string; state?: string; category?: string; page?: number }) => {
+    const qs = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => { if (v !== undefined && v !== "") qs.set(k, String(v)); });
+    return request<CataloguePage>(`/catalogue?${qs.toString()}`);
+  },
+  facets: () => request<CatalogueFacets>("/catalogue/facets"),
+  entry: (id: string) => request<CatalogueEntry>(`/catalogue/${encodeURIComponent(id)}`),
+};
+
+export const chatApi = {
+  /** contextIds: scheme ids from the previous reply, so follow-ups like "how do I apply?" refer to them. */
+  ask: (message: string, history: ChatTurn[], contextIds: string[] = [], lang: "en" | "kn" = "en") =>
+    request<ChatReply>("/chat", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message, history, context_ids: contextIds, lang }),
+    }),
+};
+
 // ----- Admin -----
 
 export interface AdminUser { username: string; display_name: string; role: "viewer" | "editor" | "reviewer" | "admin" }
